@@ -23,7 +23,7 @@ class Login extends Component {
                     <img src="https://im3.ezgif.com/tmp/ezgif-3-5c58cf32e43c.gif" />
                     </div>
                     <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                        <div class="borderblack">
+                        <div className="borderblack">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
                                     <h3 className="mgtopbottom-0">Get Started Now</h3>
