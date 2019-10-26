@@ -10,12 +10,12 @@ export const config = {
   showVideo: true,
   showSkeleton: true,
   showPoints: true,
-  minPoseConfidence: 0.2,
-  minPartConfidence: 0.5,
+  minPoseConfidence: 0.5,
+  minPartConfidence: 0.7,
   maxPoseDetections: 1,
   nmsRadius: 60,
   outputStride: 16,
-  imageScaleFactor: 0.5,
+  imageScaleFactor: 0.2,
   skeletonColor: '#ffadea',
   skeletonLineWidth: 6,
   loadingText: 'Loading...please be patient...'
@@ -24,7 +24,7 @@ export const config = {
 function toTuple({x, y}) {
   return [x, y]
 }
-
+// && ["nose","leftEye","rightEye","leftEar","rightEar"].indexOf(keypoint.part)=== -1
 export function drawKeyPoints(
   keypoints,
   minConfidence,
@@ -33,8 +33,8 @@ export function drawKeyPoints(
   scale = 1
 ) {
   keypoints.forEach(keypoint => {
-    if (keypoint.score >= minConfidence && ["nose","leftEye","rightEye","leftEar","rightEar"].indexOf(keypoint.part)=== -1) {
-      console.log(keypoint);
+    if (keypoint.score >= minConfidence ) {
+      // console.log(keypoint);
       const {x, y} = keypoint.position;
       canvasContext.beginPath()
       canvasContext.arc(x * scale, y * scale, pointRadius, 0, 2 * Math.PI)
