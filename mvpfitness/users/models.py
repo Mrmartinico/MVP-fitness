@@ -1,62 +1,52 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.db.models import Max
+
+
 # Create your models here.
-
-
-class SocialMedia(models.Model):
-    id = models.CharField(primary_key=True, editable=False, max_length=25)
-    social_platform = models.TextField(max_length=50)
-    session_id = models.TextField(max_length=70)
-
-
-class Address(models.Model):
-    id = models.CharField(primary_key=True, editable=False, max_length=25)
-    street_name = models.CharField(max_length=100)
-    country = models.CharField(max_length=70)
-    state = models.CharField(max_length=50, blank=True)
-    city =  models.CharField(max_length=30)
-    zip_code = models.PositiveIntegerField()
-
-
-class Tier(models.Model):
-    id = models.CharField(primary_key=True, editable=False, max_length=25)
-    tier_plan = models.CharField(max_length=30)
-    tier_amount = models.PositiveIntegerField()
-    valid_until = models.DateTimeField()
 
 
 class User(AbstractBaseUser):
     id = models.CharField(primary_key=True, editable=False, max_length=25)
-    social_media_id = models.ForeignKey(SocialMedia, on_delete=models.CASCADE)
-    address_id = models.ForeignKey(Address, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     username = models.TextField(max_length=10)
     email = models.EmailField(max_length=70)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=150)
     user_type = models.CharField(max_length=15)
     timezone = models.CharField(max_length=25)
     created_at = models.DateTimeField()
-    cancelled_at = models.DateTimeField(default='')
+    cancelled_at = models.DateTimeField(blank=True, null=True)
     date_of_birth = models.DateField()
-    suspended_until = models.DateTimeField(default='')
+    suspended_until = models.DateTimeField(blank=True, null=True)
     gender = models.CharField(max_length=20)
-    last_attended_date = models.DateTimeField(default='')
-    last_login_at = models.DateTimeField(default='')
-    tier_id = models.ForeignKey(Tier, on_delete=models.CASCADE)
+    last_attended_date = models.DateTimeField(blank=True, null=True)
+    last_login_at = models.DateTimeField(blank=True, null=True)
     account_status = models.CharField(max_length=30)
-    password_reminder_token = models.CharField(max_length=100)
-    password_remider_expire = models.CharField(max_length=120)
-    email_confirmation_token = models.CharField(max_length=150)
+    password_reminder_token = models.CharField(max_length=100, default='')
+    password_remider_expire = models.CharField(max_length=120, default='')
+    email_confirmation_token = models.CharField(max_length=150, default='')
     height = models.DecimalField(max_digits=5, decimal_places=2)
     weight = models.DecimalField(max_digits=5, decimal_places=2)
-    session_count = models.PositiveIntegerField()
+    session_count = models.PositiveIntegerField(default=0)
     telephone = models.CharField(max_length=20)
+    profile_image = models.ImageField(upload_to='', blank=True, null=True, default='')
 
-    def create_user(self, email, first_name, last_name,username, password):
+    def save(self, **kwargs):
+        if not self.id:
+            count = Counter.get_counter(self, 'usr')
+            self.id = "{}{:03d}".format('usr_', count)
+        super().save(*kwargs)
+
+    def create_user(self, first_name, last_name, username, email, password, user_type, timezone, created_at,
+                    date_of_birth, gender, account_status, height, weight, telephone, profile_image):
         if not email:
             raise ValueError('Users must have an email address')
-        user = User(email=email, first_name=first_name, last_name=last_name)
+        user = User(first_name=first_name, last_name=last_name, username=username,
+                    email=email, password=password, user_type=user_type,
+                    timezone=timezone, created_at=created_at, date_of_birth=date_of_birth,
+                    gender=gender, account_status=account_status, height=height, weight=weight,
+                    telephone=telephone, profile_image=profile_image)
         user.username = username
         user.set_password(password)
         user.save()
@@ -68,10 +58,8 @@ class User(AbstractBaseUser):
     def get_short_name(self):
         return self.username
 
-
     def __str__(self):
         return self.email
-
 
     def update_user(self, email, first_name, last_name, username, password):
         if not email:
@@ -84,3 +72,60 @@ class User(AbstractBaseUser):
             self.set_password(password)
         self.save()
         return self
+
+
+class Address(models.Model):
+    id = models.CharField(primary_key=True, editable=False, max_length=25)
+    street_name = models.CharField(max_length=100)
+    country = models.CharField(max_length=70)
+    state = models.CharField(max_length=50, blank=True)
+    city = models.CharField(max_length=30)
+    zip_code = models.CharField(max_length=50)
+    user_id = models.ForeignKey(User, on_delete='')
+    is_active = models.TextField()
+
+    def save(self, **kwargs):
+        if not self.id:
+            count = Counter.get_counter(self, 'add')
+            self.id = "{}{:03d}".format('add_', count)
+        super().save(*kwargs)
+
+
+class Tier(models.Model):
+    id = models.CharField(primary_key=True, editable=False, max_length=25)
+    tier_plan = models.CharField(max_length=30)
+    tier_amount = models.PositiveIntegerField()
+    valid_until = models.DateTimeField()
+    is_active = models.TextField()
+    user_id = models.ForeignKey(User, on_delete='')
+
+    def save(self, **kwargs):
+        if not self.id:
+            count = Counter.get_counter('tier')
+            self.id = "{}{:03d}".format('tier_', count)
+        super().save(*kwargs)
+
+
+class SocialMedia(models.Model):
+    id = models.CharField(primary_key=True, editable=False, max_length=25)
+    social_platform = models.TextField(max_length=50)
+    session_id = models.TextField(max_length=70, default='')
+    user_id = models.ForeignKey(User, on_delete='')
+
+    def save(self, **kwargs):
+        if not self.id:
+            count = Counter.get_counter(self, 'social')
+            self.id = "{}{:03d}".format('social_', count)
+        super().save(*kwargs)
+
+
+class Counter(models.Model):
+    type = models.CharField(max_length=80)
+    count = models.IntegerField()
+
+    def get_counter(self, counter_type):
+        counter = Counter.objects.get(type=counter_type)
+        count = counter.count
+        counter.count = counter.count + 1
+        counter.save()
+        return count
