@@ -53,7 +53,7 @@ class User(AbstractBaseUser):
         return user
 
     def get_full_name(self):
-        return self.first_name + self.last_name
+        return self.first_name + ' ' + self.last_name
 
     def get_short_name(self):
         return self.username
@@ -78,7 +78,7 @@ class Address(models.Model):
     id = models.CharField(primary_key=True, editable=False, max_length=25)
     street_name = models.CharField(max_length=100)
     country = models.CharField(max_length=70)
-    state = models.CharField(max_length=50, blank=True)
+    state = models.CharField(max_length=50, null=True)
     city = models.CharField(max_length=30)
     zip_code = models.CharField(max_length=50)
     user_id = models.ForeignKey(User, on_delete='')
