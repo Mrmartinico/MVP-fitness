@@ -63,7 +63,7 @@ class App extends React.Component {
     // imageUrl: "https://lh5.googleusercontent.com/-JtryMtxOPxg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfNgJEEvNBsHgnKVxUG5nm1y8YLRw/s96-c/photo.jpg"
     // name: "Syed Ali"
     if (res && res.googleId) {
-      fetch('http://40.87.56.201/user/create/api', {
+      fetch('http://127.0.0.1:8000/user/create/api', {
         method: 'POST',
         body: JSON.stringify({
           'full_name': res.profileObj.name,
@@ -333,7 +333,7 @@ class App extends React.Component {
     }
     console.log(this.state);
 
-    fetch('http://40.87.56.201/user/create', {
+    fetch('http://127.0.0.1:8000/user/create', {
       method: 'POST',
       body: JSON.stringify(
         {
@@ -402,7 +402,7 @@ class App extends React.Component {
     //   .then(response => response.json())
     //   .then(json => console.log(json))
 
-    fetch('http://40.87.56.201/user/login', {
+    fetch('http://127.0.0.1:8000/user/login', {
       method: 'POST',
       body: JSON.stringify({
         username: this.state.email,
