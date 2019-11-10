@@ -1,7 +1,7 @@
 import { drawKeyPoints, drawSkeleton } from './utils'
 import React, { Component } from 'react'
 import * as posenet from '@tensorflow-models/posenet'
-import lVedio from '../vedio/yoga_1.mp4'
+import lVedio from '../vedio/newvedio.mpeg'
 
 class PoseNet extends Component {
   static defaultProps = {
