@@ -18,7 +18,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.scroll{
+    overflow: scroll;
+}
+::-webkit-scrollbar {
+    display: none;
+}
 .App-link {
   color: #09d3ac;
 }
@@ -79,6 +84,11 @@ overflow: hidden;
     line-height: 100px;
     margin-top: 88px;
 }
+.overlay-wrap h3{
+    color: #fff;
+    font-size: 30px;
+    line-height: 100px;
+}
 .global-btn{
     border-radius: 25px;
     padding:3px 17px 5px 17px;
@@ -91,7 +101,12 @@ overflow: hidden;
 .blue-color{
   color: #0f00fb;
 }
-
+.warning-color{
+    color: #e01c37eb;
+  }
+.warning-success{
+    color: #55ea4c;
+}
 .global-btn.borderd{
     background-color: transparent;
     border: 1px solid #fff;
@@ -192,3 +207,13 @@ overflow: hidden;
 .direct-login img{max-width: 60%;}
 .my-modal form .input-group-append{border-bottom: 1px solid #b5b5b5;}
 .fa-check{color:#2dbd03}    
+.mr-10{
+   margin-right: 10px; 
+}
+.mt-10{
+    margin-top: 10px;
+}
+.btn-facebook{
+    padding: 18px;
+    font-size: 11px;
+}
