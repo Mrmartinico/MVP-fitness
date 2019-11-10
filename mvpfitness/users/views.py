@@ -24,7 +24,7 @@ class CreateUser(APIView):
                                     email=body['email'], password=body['password'], user_type=body['user_type'],
                                     timezone=body['timezone'], created_at=datetime.now(tz=timezone.utc),
                                     date_of_birth=datetime.strptime(body['dob'], '%d-%m-%Y') if body[
-                                        'dob'] else '01-01-0001',
+                                        'dob'] else '0001-01-01',
                                     gender=body['gender'], account_status=True, height=body['height'],
                                     weight=body['weight'],
                                     telephone=body['telephone'], profile_image='')
@@ -32,8 +32,9 @@ class CreateUser(APIView):
                               city=body['city'], zip_code=body['zip_code'], user_id=user)
             address.save()
 
-            if body['login_type'] == "social_media":
-                social_media = SocialMedia(self, social_platform=body['platform'], session_id=body['session_id'], user_is=User)
+            if body['signup_type'] == "social_media":
+                social_media = SocialMedia(self, social_platform=body['social_media_type'],
+                                           session_id=body['social_media_id'], user_id=user)
                 social_media.save()
 
             user_status.update({'full_name': body['full_name'], 'email': body['email'], 'user_id': user.id,
@@ -64,12 +65,15 @@ class LoginUser(APIView):
                 return Response(login_status, status=status.HTTP_200_OK)
 
         if body['login_type'] == "social_media" and body['user_type'] == "user":
+            user_social = SocialMedia.objects.filter(session_id=body['social_media_id'])
             if user.exists():
-                social_media = SocialMedia(self, social_platform=body['platform'], session_id=body['session_id'],
-                                           user_is=User)
-                social_media.save()
-                login_status = {'full_name': '', 'email': '', 'user_id': '', 'user_type': '', 'user_exist': True,
-                                'session_id': body['session_id']}
+                if not user_social.exists():
+                    social_media = SocialMedia(self, social_platform=body['social_media_type'],
+                                               session_id=body['social_media_id'],
+                                               user_id=user[0])
+                    social_media.save()
+                login_status = {'full_name': '', 'email': user[0].email, 'user_id': user[0].id, 'user_type': user[0].user_type,
+                                'user_exist': True, 'social_media_id': body['social_media_id']}
                 return Response(login_status, status=status.HTTP_200_OK)
             else:
                 login_status = {'full_name': '', 'email': '', 'user_id': '', 'user_type': '', 'user_exist': False}

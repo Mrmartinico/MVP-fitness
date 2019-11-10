@@ -7,7 +7,7 @@ from django.db.models import Max
 
 
 class User(AbstractBaseUser):
-    id = models.CharField(primary_key=True, editable=False, max_length=25)
+    id = models.CharField(primary_key=True, editable=False, max_length=255)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     username = models.TextField(max_length=10)
@@ -107,7 +107,7 @@ class Tier(models.Model):
 
 
 class SocialMedia(models.Model):
-    id = models.CharField(primary_key=True, editable=False, max_length=25)
+    id = models.CharField(primary_key=True, editable=False, max_length=255)
     social_platform = models.TextField(max_length=50)
     session_id = models.TextField(max_length=70, default='')
     user_id = models.ForeignKey(User, on_delete='')
