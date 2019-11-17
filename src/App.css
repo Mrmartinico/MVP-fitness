@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
 
+
 .App {
   text-align: center;
 }
@@ -48,6 +49,13 @@ padding: 0;
 height: 100%;
 background-color: #fff;
 overflow: hidden;
+}
+
+.ml-5px{
+    margin-left: 5px
+}
+.mt-5px{
+    margin-top: 5px
 }
 .nav-top{height: 12%;}
 .nav-top > .navbar{
@@ -138,7 +146,7 @@ overflow: hidden;
     color: #fff;
 }
 .my-modal{
-    background-color: rgba(15,0,251,.6) !important;
+    background-color:transparent !important;
 }
 .my-modal .modal-content{height: 100%;}
 .my-modal .modal-dialog{
@@ -216,4 +224,8 @@ overflow: hidden;
 .btn-facebook{
     padding: 18px;
     font-size: 11px;
+}
+.md-login-err{
+    text-align: center;
+    padding: 10px;
 }
