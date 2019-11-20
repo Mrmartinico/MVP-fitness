@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.postgres.fields import ArrayField
 from django.db.models import Max
 
 
@@ -14,6 +15,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=70)
     password = models.CharField(max_length=150)
     user_type = models.CharField(max_length=15)
+    expertise = models.TextField(null=True)
     timezone = models.CharField(max_length=25)
     created_at = models.DateTimeField()
     cancelled_at = models.DateTimeField(blank=True, null=True)
@@ -30,6 +32,7 @@ class User(AbstractBaseUser):
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     session_count = models.PositiveIntegerField(default=0)
     telephone = models.CharField(max_length=20)
+    specialization_type = models.ManyToManyField('home.Fitness', related_name='fitness')
     profile_image = models.ImageField(upload_to='', blank=True, null=True, default='')
 
     def save(self, **kwargs):
@@ -39,7 +42,7 @@ class User(AbstractBaseUser):
         super().save(*kwargs)
 
     def create_user(self, first_name, last_name, username, email, password, user_type, timezone, created_at,
-                    date_of_birth, gender, account_status, height, weight, telephone, profile_image):
+                    date_of_birth, gender, account_status, height, weight, telephone, profile_image, fitness_types):
         if not email:
             raise ValueError('Users must have an email address')
         user = User(first_name=first_name, last_name=last_name, username=username,
@@ -50,6 +53,10 @@ class User(AbstractBaseUser):
         user.username = username
         user.set_password(password)
         user.save()
+        from home.models import Fitness
+        for fit_id in fitness_types:
+            fitness = Fitness.objects.get(id=fit_id)
+            user.specialization_type.add(fitness)
         return user
 
     def get_full_name(self):
@@ -109,6 +116,7 @@ class Tier(models.Model):
 class SocialMedia(models.Model):
     id = models.CharField(primary_key=True, editable=False, max_length=255)
     social_platform = models.TextField(max_length=50)
+    session_id = models.TextField(max_length=70, default='')
     session_id = models.TextField(max_length=70, default='')
     user_id = models.ForeignKey(User, on_delete='')
 

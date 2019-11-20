@@ -27,7 +27,7 @@ class CreateUser(APIView):
                                         'dob'] else '0001-01-01',
                                     gender=body['gender'], account_status=True, height=body['height'],
                                     weight=body['weight'],
-                                    telephone=body['telephone'], profile_image='')
+                                    telephone=body['telephone'], profile_image='', fitness_types=body['fitness_id'])
             address = Address(street_name=body['street'], country=body['country'], state=body['state'],
                               city=body['city'], zip_code=body['zip_code'], user_id=user)
             address.save()
