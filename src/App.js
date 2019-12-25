@@ -1,18 +1,16 @@
 import React from 'react';
 import './App.css';
-import Camera from './components/Camera.js';
+import Dashboard from './components/Dashboard.js';
+
 import logobg from './assests/Home-bg.jpg';
 import logoDummy from './assests/logo.png';
 import logoicon from './assests/logo-1.jpg';
-import facebook from './assests/facebook.jpg';
-import google from './assests/google.jpg';
-import { GoogleLogin } from 'react-google-login';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { Player } from 'video-react';
+
+import {GoogleLogin} from 'react-google-login';
+import {Player} from 'video-react';
+import {LOCAL_STORAGE_KEY, LOGIN_URL, SIGN_UP_URL} from "./common/urlconstants";
 
 // Importing ml5.js as ml5
-const LocalStorageKey = '__pref__fitness';
 
 class App extends React.Component {
   constructor(props) {
@@ -42,21 +40,22 @@ class App extends React.Component {
 
 
   }
+
   getInitialState() {
     console.log('>> getInitialState');
   }
 
   componentDidMount() {
-    console.log('>> componentDidMount', localStorage.getItem(LocalStorageKey));
+    console.log('>> componentDidMount', localStorage.getItem(LOCAL_STORAGE_KEY));
 
     // once the component has mount, start the classification
     // this.classifyImg();`
-    const l = localStorage.getItem(LocalStorageKey);
+    const l = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (l && JSON.parse(l) && JSON.parse(l).user_id) {
-      this.setState({ loginInfo: JSON.parse(l) });
-      this.setState({ loginStatus: true });
+      this.setState({loginInfo: JSON.parse(l)});
+      this.setState({loginStatus: true});
     } else {
-      this.setState({ loginStatus: false });
+      this.setState({loginStatus: false});
 
     }
   }
@@ -64,10 +63,10 @@ class App extends React.Component {
 
   responseFacebook = (res) => {
     console.log(res);
-  }
+  };
   responseGoogle = (res) => {
     console.log(res);
-    this.setState({ signUpPage: this.state.signUpPage + 1 });
+    this.setState({signUpPage: this.state.signUpPage + 1});
     // googleId
     // profileObj:
     // email: "syedikramali37@gmail.com"
@@ -110,18 +109,18 @@ class App extends React.Component {
     //   })
     // }
 
-  }
+  };
 
   register = () => {
-    this.setState({ error: '' });
+    this.setState({error: ''});
 
     if (this.state.activity.length === 0) {
-      this.setState({ error: 'Please select atleast 1 acitivity' });
+      this.setState({error: 'Please select at least 1 activity'});
       return;
     }
     console.log(this.state);
 
-    fetch('http://smarthomeupdates.org/user/create', {
+    fetch(SIGN_UP_URL, {
       method: 'POST',
       body: JSON.stringify(
         {
@@ -158,12 +157,11 @@ class App extends React.Component {
       console.log(' >>>> SIGN UP ', res);
       if (res.status === "User Email Already exists") {
         // this.next();
-        this.setState({ error: 'User Email Already exists' });
+        this.setState({error: 'User Email Already exists'});
       } else if (res.status === "User Created Successfully") {
         this.next();
-        localStorage.setItem(LocalStorageKey, JSON.stringify(res));
-        this.setState({ loginInfo: res });
-        this.setState({ loginStatus: true });
+        this.setState({loginInfo: res});
+        this.setState({loginStatus: true});
         // {"status":"User Created Successfully","full_name":"test001","email":"test001@gmail.com","user_id":"usr_019","user_type":"user"}
         // this.setState({ success: 'You have successfully registered, please login now' });
 
@@ -187,7 +185,7 @@ class App extends React.Component {
     // imageUrl: "https://lh5.googleusercontent.com/-JtryMtxOPxg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfNgJEEvNBsHgnKVxUG5nm1y8YLRw/s96-c/photo.jpg"
     // name: "Syed Ali"
     if (res && res.googleId) {
-      fetch('http://smarthomeupdates.org/user/login', {
+      fetch(LOGIN_URL, {
         method: 'POST',
         body: JSON.stringify({
           "username": res.profileObj.email,
@@ -204,14 +202,14 @@ class App extends React.Component {
         console.log('Login response with social media', res);
         // res.user_exist = false;
         if (res.user_exist) {
-          localStorage.setItem(LocalStorageKey, JSON.stringify(res));
-          this.setState({ loginInfo: res });
-          this.setState({ loginStatus: true });
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(res));
+          this.setState({loginInfo: res});
+          this.setState({loginStatus: true});
           window.$('#myModal-signin').modal('toggle');
         } else {
-          this.setState({ signUpType: 'socialmedia' })
+          this.setState({signUpType: 'socialmedia'});
           window.$('#myModal-signin').modal('toggle');
-          this.setState({ signUpPage: this.state.signUpPage + 1 })
+          this.setState({signUpPage: this.state.signUpPage + 1});
           window.$('#myModal-signup').modal('toggle');
         }
         //this.setState({ signUpPage: this.state.signUpPage + 1 });
@@ -219,34 +217,28 @@ class App extends React.Component {
       })
     }
 
-  }
+  };
 
 
   logOut = () => {
     console.log('logging out ??');
-    localStorage.setItem(LocalStorageKey, '');
-    this.setState({ loginInfo: '' });
-    this.setState({ loginStatus: false });
+    localStorage.setItem(LOCAL_STORAGE_KEY, '');
+    this.setState({loginInfo: ''});
+    this.setState({loginStatus: false});
   };
 
   logIn = () => {
     console.log(this.state.email);
     console.log(this.state.pwd);
     if (!this.state.email) {
-      this.setState({ loginError: '* Please enter your required fields' });
+      this.setState({loginError: '* Please enter your required fields'});
       return;
     }
     if (!this.state.pwd) {
-      this.setState({ loginError: '* Please enter your required fields' });
+      this.setState({loginError: '* Please enter your required fields'});
       return;
     }
-
-    //  GET API sample
-    //         fetch('https://jsonplaceholder.typicode.com/todos/1')
-    //   .then(response => response.json())
-    //   .then(json => console.log(json))
-
-    fetch('http://smarthomeupdates.org/user/login', {
+    fetch(LOGIN_URL, {
       method: 'POST',
       body: JSON.stringify({
         username: this.state.email,
@@ -258,46 +250,35 @@ class App extends React.Component {
         "Content-type": "application/json"
       }
     }).then(response => response.json()).then(res => {
-      // email: "nishant.kora@gmail.com"
-      // full_name: "Nishant Kora"
-      // status: "User logged in successfully"
-      // user_id: "usr_001"
-      // user_type: "user"
       console.log('LOGIN result', res);
       if (res && res.status === 'User logged in successfully') {
-        localStorage.setItem(LocalStorageKey, JSON.stringify(res));
-        this.setState({ loginInfo: res });
-        if (this.state.loginInfo && this.state.loginInfo.user_id) {
-          this.setState({ loginStatus: true });
-        } else {
-          this.setState({ loginStatus: false });
-
-        }
         window.$('#myModal-signin').modal('toggle');
-
-
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(res));
+        this.setState({loginInfo: res});
+        if (this.state.loginInfo && this.state.loginInfo.user_id) {
+          this.setState({loginStatus: true});
+        } else {
+          this.setState({loginStatus: false});
+        }
       } else {
         console.log('Login failed', res);
-        this.setState({ loginError: 'Invalid credentials' });
-
+        this.setState({loginError: 'Invalid credentials'});
       }
-      //{"status":"User logged in successfully","full_name":"Nishant Kora",
-      // "email":"nishant.kora@gmail.com","user_id":"usr_001","user_type":"user"}
     })
   };
 
   next = () => {
-    this.setState({ signUpPage: this.state.signUpPage + 1 })
-  }
+    this.setState({signUpPage: this.state.signUpPage + 1})
+  };
   back = () => {
-    this.setState({ signUpPage: this.state.signUpPage - 1 })
+    this.setState({signUpPage: this.state.signUpPage - 1})
 
-  }
+  };
   handleGender = (value) => {
     console.log(value);
-    this.setState({ gender: value.id })
+    this.setState({gender: value.id})
 
-  }
+  };
   handleActivity = (e) => {
 
     const position = this.state.activity.indexOf(e.target.innerHTML);
@@ -310,27 +291,28 @@ class App extends React.Component {
     // this.setState({ activity: e.target.innerHTML })
     console.log(this.state.activity);
 
-    this.setState({ activity: this.state.activity });
+    this.setState({activity: this.state.activity});
 
-  }
+  };
   handleWhen = (e) => {
-    this.setState({ when: e.target.innerHTML })
+    this.setState({when: e.target.innerHTML})
 
-  }
+  };
   closeSignUpModel = () => {
     window.$('#myModal-signup').modal('toggle');
-  }
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.loginInfo));
+  };
 
   renderForms() {
     if (this.state.signUpPage === 0) {
       return (
         <div>
           <div className="logo-wrap w-100">
-            <img src={logoicon} alt="logo" />
+            <img src={logoicon} alt="logo"/>
           </div>
           <div className="modal-heading w-100">
             <h1>sign up</h1>
-            <p>Hello! Create your profile and <br />start excersing now.</p>
+            <p>Hello! Create your profile and <br/>start excersing now.</p>
           </div>
           {/* <div className="direct-login">
             <div>
@@ -376,17 +358,20 @@ class App extends React.Component {
                 <div className="form-group">
                   <label htmlFor="weight">Email</label>
                   <input type="email" value={this.state.email ? this.state.email : ''}
-                    onChange={event => this.setState({ email: event.target.value, fName: event.target.value.substring(0, event.target.value.lastIndexOf("@")) })}
-                    className="form-control modal-form-input" />
+                         onChange={event => this.setState({
+                           email: event.target.value,
+                           fName: event.target.value.substring(0, event.target.value.lastIndexOf("@"))
+                         })}
+                         className="form-control modal-form-input"/>
                 </div>
                 <div className="form-group input-group">
                   <label htmlFor="password">Password</label>
                   <input type="password"
-                    value={this.state.pwd ? this.state.pwd : ''}
-                    onChange={event => this.setState({ pwd: event.target.value })}
-                    className="form-control modal-form-input" />
+                         value={this.state.pwd ? this.state.pwd : ''}
+                         onChange={event => this.setState({pwd: event.target.value})}
+                         className="form-control modal-form-input"/>
                   <div className="input-group-append">
-                    <i className="fa fa-check" aria-hidden="true" />
+                    <i className="fa fa-check" aria-hidden="true"/>
                   </div>
                 </div>
                 {/* <div className="input-group form-group">
@@ -416,7 +401,7 @@ class App extends React.Component {
       return (
         <div>
           <div className="logo-wrap w-100">
-            <img src={logoicon} alt="logo" />
+            <img src={logoicon} alt="logo"/>
           </div>
           <div className="modal-heading w-100">
             <h1>{this.state.signUpType === 'normal' ? 'sign up' : ''}</h1>
@@ -428,29 +413,29 @@ class App extends React.Component {
                 <div className="form-group">
                   <label htmlFor="gender">Gender <span className="warning-color"> *</span> </label>
                   <button type="button" className={this.state.gender === 'M' ? active : inActive}
-                    onClick={this.handleGender.bind(null, { id: 'M' })}>Male
+                          onClick={this.handleGender.bind(null, {id: 'M'})}>Male
                   </button>
                   <button type="button" className={this.state.gender === 'F' ? active : inActive}
-                    onClick={this.handleGender.bind(null, { id: 'F' })}>Female
+                          onClick={this.handleGender.bind(null, {id: 'F'})}>Female
                   </button>
                   <button type="button" className={this.state.gender === 'NON-B' ? active : inActive}
-                    onClick={this.handleGender.bind(null, { id: 'NON-B' })}>Non-binary
+                          onClick={this.handleGender.bind(null, {id: 'NON-B'})}>Non-binary
                   </button>
                   <button type="button" className={this.state.gender === 'NO-DIS' ? active : inActive}
-                    onClick={this.handleGender.bind(null, { id: 'NO-DIS' })}>I prefer not to disclose
+                          onClick={this.handleGender.bind(null, {id: 'NO-DIS'})}>I prefer not to disclose
                   </button>
                 </div>
                 <div className="form-group">
                   <label htmlFor="Height">Height</label>
                   <input type="number" value={this.state.height ? this.state.height : ''}
-                    onChange={event => this.setState({ height: event.target.value })}
-                    className="form-control modal-form-input" />
+                         onChange={event => this.setState({height: event.target.value})}
+                         className="form-control modal-form-input"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="weight">Weight</label>
                   <input type="number" value={this.state.weight ? this.state.weight : ''}
-                    onChange={event => this.setState({ weight: event.target.value })}
-                    className="form-control modal-form-input" />
+                         onChange={event => this.setState({weight: event.target.value})}
+                         className="form-control modal-form-input"/>
                 </div>
               </div>
               <div className="col-5">
@@ -458,32 +443,33 @@ class App extends React.Component {
                   <label htmlFor="Activities">What Activities do you prefer?</label>
 
                   <button type="button" onClick={this.handleActivity}
-                    className={(this.state.activity.indexOf('Yoga') > -1) ? active : inActive}>Yoga
+                          className={(this.state.activity.indexOf('Yoga') > -1) ? active : inActive}>Yoga
                   </button>
                   <button type="button" onClick={this.handleActivity}
-                    className={(this.state.activity.indexOf('Pilates') > -1) ? active : inActive}>Pilates
+                          className={(this.state.activity.indexOf('Pilates') > -1) ? active : inActive}>Pilates
                   </button>
                   <button type="button" onClick={this.handleActivity}
-                    className={(this.state.activity.indexOf('Tai Chi') > -1) ? active : inActive}>Tai Chi
+                          className={(this.state.activity.indexOf('Tai Chi') > -1) ? active : inActive}>Tai Chi
                   </button>
                   <button type="button" onClick={this.handleActivity}
-                    className={(this.state.activity.indexOf('Zumba') > -1) ? active : inActive}>Zumba
+                          className={(this.state.activity.indexOf('Zumba') > -1) ? active : inActive}>Zumba
                   </button>
                   <button type="button" onClick={this.handleActivity}
-                    className={(this.state.activity.indexOf('Weight Lifting') > -1) ? active : inActive}>Weight Lifting
+                          className={(this.state.activity.indexOf('Weight Lifting') > -1) ? active : inActive}>Weight
+                    Lifting
                   </button>
                 </div>
                 <div className="form-group">
                   <label htmlFor="Activities">When?</label>
                   <button type="button" onClick={this.handleWhen}
-                    className={this.state.when === 'Morning' ? active : inActive}>Morning
-                    </button>
+                          className={this.state.when === 'Morning' ? active : inActive}>Morning
+                  </button>
                   <button type="button" onClick={this.handleWhen}
-                    className={this.state.when === 'Noon' ? active : inActive}>Noon
-                    </button>
+                          className={this.state.when === 'Noon' ? active : inActive}>Noon
+                  </button>
                   <button type="button" onClick={this.handleWhen}
-                    className={this.state.when === 'Evening' ? active : inActive}>Evening
-                    </button>
+                          className={this.state.when === 'Evening' ? active : inActive}>Evening
+                  </button>
                 </div>
               </div>
             </div>
@@ -495,7 +481,7 @@ class App extends React.Component {
                 <h2> You have {unreadMessages.length} unread messages.    </h2>
               } */}
               {this.state.signUpType === 'normal' &&
-                <button type="button" onClick={this.back} className="btn global-btn">Back</button>
+              <button type="button" onClick={this.back} className="btn global-btn">Back</button>
               }
               <button type="button" onClick={this.register} className="btn global-btn ml-5px">
                 {this.state.signUpType === 'normal' ? 'Next' : 'Save'}</button>
@@ -507,11 +493,12 @@ class App extends React.Component {
       return (
         <div>
           <div className="logo-wrap w-100">
-            <img src={logoicon} alt="logo" />
+            <img src={logoicon} alt="logo"/>
           </div>
           <div className="modal-heading w-100">
             <h1 className="no-text-transform">You will now warm up with 5 tutorial poses.</h1>
-            <h1 className="no-text-transform">Following the instructor for each pose, we will provide you with a live performance feedback.</h1>
+            <h1 className="no-text-transform">Following the instructor for each pose, we will provide you with a live
+              performance feedback.</h1>
             <h1> Ready ? </h1>
           </div>
           <div className="modal-inner-content">
@@ -527,17 +514,17 @@ class App extends React.Component {
 
         <div>
           <div className="logo-wrap w-100">
-            <img src={logoicon} alt="logo" />
+            <img src={logoicon} alt="logo"/>
           </div>
           <div className="modal-heading w-100">
             <h1 className="no-text-transform">Now follow us...</h1>
             <h1 className="no-text-transform">
-              Place your device in a place<br />
-              where your entire body can<br />
+              Place your device in a place<br/>
+              where your entire body can<br/>
               fit in the screen
             </h1>
             <h1 className="no-text-transform">
-              Then follow<br />
+              Then follow<br/>
               the instructor
             </h1>
           </div>
@@ -567,351 +554,228 @@ class App extends React.Component {
 
 
   showWebCam = () => {
-    this.setState({ showlogin: !this.state.showlogin });
-
+    this.setState({showlogin: !this.state.showlogin});
   };
 
   hideWebcam = () => {
-    this.setState({ showlogin: false });
+    this.setState({showlogin: false});
 
   };
 
 
   openSignUpModel = () => {
-    this.setState({ signUpPage: 0, error: '', success: '' });
+    this.setState({signUpPage: 0, error: '', success: ''});
 
   };
   openSignInModel = () => {
-    this.setState({ error: '', success: '' });
+    this.setState({error: '', success: ''});
 
   };
+
   render() {
-    const { showlogin } = this.state;
+    // const {showlogin} = this.state;
+    const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY);
+    console.log(userInfo);
+    const isUserLogIn = !!userInfo;
+
     return (
       <div>
-        <header className="nav-top">
-          <nav className="navbar navbar-expand-lg">
-            <a className="navbar-brand">
-              <img src={logoDummy} alt="logo" />
-            </a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" href="#" onClick={this.showWebCam}>Home</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal">About</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal-2">How It Works</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={this.showWebCam}>Live Session</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link disabled" href="#">Become a Coach</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link disabled" href="#">FAQ</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link disabled" href="#">Contact</a>
-                </li>
+        {isUserLogIn ?
+          <div>
+            <Dashboard onLogOut={this.logOut}/>
+          </div>
+          : <div>
+            <header className="nav-top">
+              <nav className="navbar navbar-expand-lg">
+                <a className="navbar-brand">
+                  <img src={logoDummy} alt="logo"/>
+                </a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon"/>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                  <ul className="navbar-nav ml-auto">
+                    <li className="nav-item active">
+                      <a className="nav-link" href="#" onClick={this.showWebCam}>Home</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal">About</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal-2">How It Works</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#" onClick={this.showWebCam}>Live Session</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#">Become a Coach</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#">FAQ</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#">Contact</a>
+                    </li>
 
-                {this.state.loginStatus ?
+                    {this.state.loginStatus ?
 
-                  <li className="nav-item" onClick={this.logOut}>
-                    <a className="nav-link disabled" href="#">Logout</a>
-                  </li>
-                  :
-                  <li className="nav-item">
-                    <a className="nav-link " href="#">Account</a>
-                  </li>
-                }
-              </ul>
-            </div>
-          </nav>
-        </header>
-
-        {/* The Modal SIGN UP MAIN  */}
-        <div className="modal fade my-modal" id="myModal-signup">
-          <div className="modal-dialog ">
-            <div className="modal-content scroll">
-              {this.state.signUpPage === 0 ?
-                <button type="button" className="close" data-dismiss="modal">×</button> : ''
-              }
-              <div className="modal-body">
-                <div className="inner-body">
-                  <div className="modal-inner-content">
-                    <p className="warning-color">{this.state.error ? this.state.error : ''}</p>
-                    <p className="warning-success">{this.state.success ? this.state.success : ''}</p>
-
-                    {this.renderForms()}
-
-                  </div>
+                      <li className="nav-item" onClick={this.logOut}>
+                        <a className="nav-link disabled" href="#">Logout</a>
+                      </li>
+                      :
+                      <li className="nav-item">
+                        <a className="nav-link " href="#">Account</a>
+                      </li>
+                    }
+                  </ul>
                 </div>
-                {/* <div className="modal-footer">
+              </nav>
+            </header>
+
+            {/* The Modal SIGN UP MAIN  */}
+            <div className="modal fade my-modal" id="myModal-signup">
+              <div className="modal-dialog ">
+                <div className="modal-content scroll">
+                  {this.state.signUpPage === 0 ?
+                    <button type="button" className="close" data-dismiss="modal">×</button> : ''
+                  }
+                  <div className="modal-body">
+                    <div className="inner-body">
+                      <div className="modal-inner-content">
+                        <p className="warning-color">{this.state.error ? this.state.error : ''}</p>
+                        <p className="warning-success">{this.state.success ? this.state.success : ''}</p>
+
+                        {this.renderForms()}
+
+                      </div>
+                    </div>
+                    {/* <div className="modal-footer">
                                     <p>Help?</p>
                                 </div> */}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* The Modal SIGN IN login dialog */}
-        <div className="modal fade my-modal" id="myModal-signin">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <button type="button" className="close" data-dismiss="modal">×</button>
-              <div className="modal-body">
-                <div className="inner-body">
-                  <div className="logo-wrap w-100">
-                    <img src={logoicon} alt="logo" />
-                  </div>
-                  <div className="modal-heading w-100">
-                    <h1>SIGN IN</h1>
-                    {/* <p>Welcome back</p> */}
-                  </div>
-                  <div className="direct-login">
-                    <GoogleLogin
-                      clientId={'471679444708-h8k7t7r9v876gbbea7tsh7s38pkdrlvm.apps.googleusercontent.com'}
-                      onSuccess={this.responseGoogleLogin}
-                      onFailure={this.responseGoogleLogin}
-                    >
-                      {/* <FontAwesomeIcon
+            {/* The Modal SIGN IN login dialog */}
+            <div className="modal fade my-modal" id="myModal-signin">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <button type="button" className="close" data-dismiss="modal">×</button>
+                  <div className="modal-body">
+                    <div className="inner-body">
+                      <div className="logo-wrap w-100">
+                        <img src={logoicon} alt="logo"/>
+                      </div>
+                      <div className="modal-heading w-100">
+                        <h1>SIGN IN</h1>
+                        {/* <p>Welcome back</p> */}
+                      </div>
+                      <div className="direct-login">
+                        <GoogleLogin
+                          clientId={'471679444708-h8k7t7r9v876gbbea7tsh7s38pkdrlvm.apps.googleusercontent.com'}
+                          onSuccess={this.responseGoogleLogin}
+                          onFailure={this.responseGoogleLogin}
+                        >
+                          {/* <FontAwesomeIcon
               name='google'
             /> */}
-                      <span> <b> Login</b> with  <b> Google</b></span>
-                    </GoogleLogin>
-                    {/* <p className="no-margin">or</p>
+                          <span> <b> Login</b> with  <b> Google</b></span>
+                        </GoogleLogin>
+                        {/* <p className="no-margin">or</p>
                     <div><img src={facebook} alt="logo" /></div> */}
-                  </div>
+                      </div>
 
-                  <div className="modal-inner-content">
-                    <form className="form">
-                      <p className="md-login-err warning-color">{this.state.loginError ? this.state.loginError : ''}</p>
+                      <div className="modal-inner-content">
+                        <form className="form">
+                          <p
+                            className="md-login-err warning-color">{this.state.loginError ? this.state.loginError : ''}</p>
 
-                      <div className="row">
-                        <div className="col-4 offset-4">
+                          <div className="row">
+                            <div className="col-4 offset-4">
 
-                          <div className="form-group">
-                            <label htmlFor="weight">User Name</label>
-                            <input type="email" value={this.state.email ? this.state.email : ''}
-                              onChange={event => this.setState({ email: event.target.value })}
-                              className="form-control modal-form-input" />
-                          </div>
-                          <div className="form-group input-group">
-                            <label htmlFor="password">Password</label>
-                            <input type="password"
-                              value={this.state.pwd ? this.state.pwd : ''}
-                              onChange={event => this.setState({ pwd: event.target.value })}
-                              className="form-control modal-form-input" />
-                            {/* <div className="input-group-append">
+                              <div className="form-group">
+                                <label htmlFor="weight">User Name</label>
+                                <input type="email" value={this.state.email ? this.state.email : ''}
+                                       onChange={event => this.setState({email: event.target.value})}
+                                       className="form-control modal-form-input"/>
+                              </div>
+                              <div className="form-group input-group">
+                                <label htmlFor="password">Password</label>
+                                <input type="password"
+                                       value={this.state.pwd ? this.state.pwd : ''}
+                                       onChange={event => this.setState({pwd: event.target.value})}
+                                       className="form-control modal-form-input"/>
+                                {/* <div className="input-group-append">
                               <i className="fa fa-check" aria-hidden="true" />
                             </div> */}
-                          </div>
+                              </div>
 
-                          <div className="text-center">
-                            <button type="button"
-                              onClick={this.logIn}
-                              className="btn global-btn">Sign In
-                            </button>
-                          </div>
+                              <div className="text-center">
+                                <button type="button"
+                                        onClick={this.logIn}
+                                        className="btn global-btn">Sign In
+                                </button>
+                              </div>
 
-                          <div className="text-center">
-                            <p>Forgot password? <span className="blue-color">Click here </span></p>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* The Modal SIGN UP */}
-        {/* <div className="modal fade my-modal" id="myModal">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <button type="button" className="close" data-dismiss="modal">×</button>
-              <div className="modal-body">
-                <div className="inner-body">
-                  <div className="logo-wrap w-100">
-                    <img src={logoicon} alt="logo" />
-                  </div>
-                  <div className="modal-heading w-100">
-                    <h1>sign up</h1>
-                    <p>Tell us about your self</p>
-                  </div>
-                  <div className="modal-inner-content">
-                    <form className="form">
-                      <div className="row">
-                        <div className="col-4 offset-2 border-r-1px">
-                          <div className="form-group">
-                            <label htmlFor="gender">* Gender</label>
-                            <button type="button" className="btn btn-form global-btn">Male</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Female</button>
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="Height">Height</label>
-                            <input type="number" className="form-control modal-form-input" />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="weight">Weight</label>
-                            <input type="number" className="form-control modal-form-input" />
-                          </div>
-                        </div>
-                        <div className="col-5">
-                          <div className="form-group">
-                            <label htmlFor="Activities">What Activities do you prefer?</label>
-                            <button type="button" className="btn btn-form global-btn borderd">Tennis</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Yoga</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Soccer</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Crossfit</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Pilates</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Running</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Box</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Golf</button>
-                            <button type="button" className="btn btn-form global-btn borderd">Stretching</button>
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="Activities">When?</label>
-                            <div className="btn-group">
-                              <button type="button" className="btn btn-form global-btn borderd">Morning</button>
-                              <button type="button" className="btn btn-form global-btn borderd">Noon</button>
-                              <button type="button" className="btn btn-form global-btn borderd">Evening</button>
+                              <div className="text-center">
+                                <p>Forgot password? <span className="blue-color">Click here </span></p>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        </form>
                       </div>
-                      <div className="upload text-center">
-                        <i className="fa fa-camera" aria-hidden="true" /><span>Upload your picture</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section className="banner">
+              <img src={logobg}/>
+              <div className="overlay-wrap">
+                <div className="row">
+                  <div className="col-6 offset-5">
+                    <h1>When AI<br/>Meets<br/>Fitness</h1>
+                    {this.state.loginStatus === false ?
+                      <div>
+                        <button type="button" className="btn global-btn mr-10" data-toggle="modal"
+                                onClick={this.openSignUpModel} data-target="#myModal-signup" data-backdrop="static"
+                                data-keyboard="false">Sign Up
+                        </button>
+                        < button type="button" onClick={this.openSignInModel} className="btn global-btn borderd"
+                                 data-toggle="modal"
+                                 data-target="#myModal-signin" data-backdrop="static" data-keyboard="false">Sign In
+                        </button>
                       </div>
-                      <div className="text-center">
-                        <button type="button" className="btn global-btn">Next</button>
+                      :
+                      <div>
+                        <h3>Welcome {this.state.loginInfo.full_name}</h3>
                       </div>
-                    </form>
+                    }
                   </div>
                 </div>
-                <div className="modal-footer">
-                  <p>Help?</p>
+                <div className="social-media">
+                  <ul>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#"><i className="fa fa-facebook-square"/></a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#"><i className="fa fa-instagram"/></a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#"><i className="fa fa-twitter"/></a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link disabled" href="#"><i className="fa fa-youtube"/></a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
-          </div>
-        </div> */}
+            </section>
 
-        {/* The Modal SIGN UP(2) */}
-        {/* <div className="modal fade my-modal" id="myModal-2">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <button type="button" className="close" data-dismiss="modal">×</button>
-              <div className="modal-body">
-                <div className="inner-body center-element">
-                  <div className="logo-wrap w-100">
-                    <img src="./assests/logo-1.jpg" alt="logo" />
-                  </div>
-                  <div className="modal-heading w-100">
-                    <h1 className="no-text-transform">Perfect</h1>
-                    <h1 className="no-text-transform">Ready for your first lession?</h1>
-                  </div>
-                  <div className="modal-inner-content">
-                    <div className="text-center mt-5">
-                      <button type="button" className="btn global-btn mr-2">Begin</button>
-                      <button type="button" className="btn global-btn borderd">Skip</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        </div> */}
-
-        {/* The Modal SIGN UP(3) */}
-        {/* <div className="modal fade my-modal" id="myModal-3">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <button type="button" className="close" data-dismiss="modal">×</button>
-              <div className="modal-body">
-                <div className="inner-body center-element">
-                  <div className="logo-wrap w-100">
-                    <img src="./assests/logo-1.jpg" alt="logo" />
-                  </div>
-                  <div className="modal-heading w-100">
-                    <h1 className="no-text-transform">Now follow us...</h1>
-                    <h1 className="no-text-transform">
-                      Place your device in a place<br />
-                      where your entire body can<br />
-                      fit in the screen
-                    </h1>
-                    <h1 className="no-text-transform">
-                      Fit in the silhouette and<br />
-                      follow its movements
-                    </h1>
-                  </div>
-                  <div className="modal-inner-content">
-                    <div className="text-center mt-5">
-                      <button type="button" className="btn global-btn">Next</button>
-                    </div>
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <p>Help?</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
-        {showlogin ?
-          // <Login parentClick={this.handleClick} />
-          <section className="banner">
-            <img src={logobg} />
-            <div className="overlay-wrap">
-              <div className="row">
-                <div className="col-6 offset-5">
-                  <h1>When AI<br />Meets<br />Fitness</h1>
-                  {this.state.loginStatus === false ?
-                    <div>
-                      <button type="button" className="btn global-btn mr-10" data-toggle="modal"
-                        onClick={this.openSignUpModel} data-target="#myModal-signup" data-backdrop="static" data-keyboard="false">Sign Up
-                      </button>
-                      < button type="button" onClick={this.openSignInModel} className="btn global-btn borderd" data-toggle="modal"
-                        data-target="#myModal-signin" data-backdrop="static" data-keyboard="false">Sign In
-                      </button>
-                    </div>
-                    :
-                    <div>
-                      <h3>Welcome {this.state.loginInfo.full_name}</h3>
-                    </div>
-                  }
-                </div>
-              </div>
-              <div className="social-media">
-                <ul>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-facebook-square" /></a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-instagram" /></a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-twitter" /></a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-youtube" /></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section> :
-          <Camera />
         }
       </div>
     );
