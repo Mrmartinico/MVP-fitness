@@ -54,8 +54,8 @@ class User(AbstractBaseUser):
         user.set_password(password)
         user.save()
         from home.models import Fitness
-        for fit_id in fitness_types:
-            fitness = Fitness.objects.get(id=fit_id)
+        for fit_type in fitness_types:
+            fitness = Fitness.objects.get(specialization_type=fit_type)
             user.specialization_type.add(fitness)
         return user
 
