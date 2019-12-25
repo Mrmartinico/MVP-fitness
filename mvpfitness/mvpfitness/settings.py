@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'mvpfitness.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mvpfitness',
+        'NAME': 'mvpfitness2',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
