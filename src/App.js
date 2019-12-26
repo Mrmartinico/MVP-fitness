@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './components/Dashboard.js';
 
 import logobg from './assests/Home-bg.jpg';
 import logoDummy from './assests/logo.png';
@@ -156,7 +155,8 @@ class App extends React.Component {
     }).then(response => response.json()).then(res => {
       console.log(' >>>> SIGN UP ', res);
       if (res.status === "User Email Already exists") {
-        // this.next();
+
+        this.next();
         this.setState({error: 'User Email Already exists'});
       } else if (res.status === "User Created Successfully") {
         this.next();
@@ -254,12 +254,15 @@ class App extends React.Component {
       if (res && res.status === 'User logged in successfully') {
         window.$('#myModal-signin').modal('toggle');
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(res));
-        this.setState({loginInfo: res});
-        if (this.state.loginInfo && this.state.loginInfo.user_id) {
-          this.setState({loginStatus: true});
-        } else {
-          this.setState({loginStatus: false});
-        }
+        // useHistory().push('/dashboard');
+        console.log(this.props.history, '>>>>>')
+        this.props.history.push('/dashboard');
+        // this.setState({loginInfo: res});
+        // if (this.state.loginInfo && this.state.loginInfo.user_id) {
+        //   this.setState({loginStatus: true});
+        // } else {
+        //   this.setState({loginStatus: false});
+        // }
       } else {
         console.log('Login failed', res);
         this.setState({loginError: 'Invalid credentials'});
@@ -301,6 +304,8 @@ class App extends React.Component {
   closeSignUpModel = () => {
     window.$('#myModal-signup').modal('toggle');
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.loginInfo));
+    this.props.history.push('/dashboard');
+
   };
 
   renderForms() {
@@ -577,205 +582,204 @@ class App extends React.Component {
     const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY);
     console.log(userInfo);
     const isUserLogIn = !!userInfo;
+    if (userInfo)
+      this.props.history.push('/dashboard');
+
 
     return (
       <div>
-        {isUserLogIn ?
-          <div>
-            <Dashboard onLogOut={this.logOut}/>
-          </div>
-          : <div>
-            <header className="nav-top">
-              <nav className="navbar navbar-expand-lg">
-                <a className="navbar-brand">
-                  <img src={logoDummy} alt="logo"/>
-                </a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span className="navbar-toggler-icon"/>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                  <ul className="navbar-nav ml-auto">
-                    <li className="nav-item active">
-                      <a className="nav-link" href="#" onClick={this.showWebCam}>Home</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal">About</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal-2">How It Works</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#" onClick={this.showWebCam}>Live Session</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#">Become a Coach</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#">FAQ</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#">Contact</a>
-                    </li>
+        <div>
+          <header className="nav-top">
+            <nav className="navbar navbar-expand-lg">
+              <a className="navbar-brand">
+                <img src={logoDummy} alt="logo"/>
+              </a>
+              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"/>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item active">
+                    <a className="nav-link" href="#" onClick={this.showWebCam}>Home</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal">About</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal-2">How It Works</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#" onClick={this.showWebCam}>Live Session</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#">Become a Coach</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#">FAQ</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#">Contact</a>
+                  </li>
 
-                    {this.state.loginStatus ?
+                  {this.state.loginStatus ?
 
-                      <li className="nav-item" onClick={this.logOut}>
-                        <a className="nav-link disabled" href="#">Logout</a>
-                      </li>
-                      :
-                      <li className="nav-item">
-                        <a className="nav-link " href="#">Account</a>
-                      </li>
-                    }
-                  </ul>
-                </div>
-              </nav>
-            </header>
-
-            {/* The Modal SIGN UP MAIN  */}
-            <div className="modal fade my-modal" id="myModal-signup">
-              <div className="modal-dialog ">
-                <div className="modal-content scroll">
-                  {this.state.signUpPage === 0 ?
-                    <button type="button" className="close" data-dismiss="modal">×</button> : ''
+                    <li className="nav-item" onClick={this.logOut}>
+                      <a className="nav-link disabled" href="#">Logout</a>
+                    </li>
+                    :
+                    <li className="nav-item">
+                      <a className="nav-link " href="#">Account</a>
+                    </li>
                   }
-                  <div className="modal-body">
-                    <div className="inner-body">
-                      <div className="modal-inner-content">
-                        <p className="warning-color">{this.state.error ? this.state.error : ''}</p>
-                        <p className="warning-success">{this.state.success ? this.state.success : ''}</p>
+                </ul>
+              </div>
+            </nav>
+          </header>
 
-                        {this.renderForms()}
+          {/* The Modal SIGN UP MAIN  */}
+          <div className="modal fade my-modal" id="myModal-signup">
+            <div className="modal-dialog ">
+              <div className="modal-content scroll">
+                {this.state.signUpPage === 0 ?
+                  <button type="button" className="close" data-dismiss="modal">×</button> : ''
+                }
+                <div className="modal-body">
+                  <div className="inner-body">
+                    <div className="modal-inner-content">
+                      <p className="warning-color">{this.state.error ? this.state.error : ''}</p>
+                      <p className="warning-success">{this.state.success ? this.state.success : ''}</p>
 
-                      </div>
+                      {this.renderForms()}
+
                     </div>
-                    {/* <div className="modal-footer">
+                  </div>
+                  {/* <div className="modal-footer">
                                     <p>Help?</p>
                                 </div> */}
-                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* The Modal SIGN IN login dialog */}
-            <div className="modal fade my-modal" id="myModal-signin">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <button type="button" className="close" data-dismiss="modal">×</button>
-                  <div className="modal-body">
-                    <div className="inner-body">
-                      <div className="logo-wrap w-100">
-                        <img src={logoicon} alt="logo"/>
-                      </div>
-                      <div className="modal-heading w-100">
-                        <h1>SIGN IN</h1>
-                        {/* <p>Welcome back</p> */}
-                      </div>
-                      <div className="direct-login">
-                        <GoogleLogin
-                          clientId={'471679444708-h8k7t7r9v876gbbea7tsh7s38pkdrlvm.apps.googleusercontent.com'}
-                          onSuccess={this.responseGoogleLogin}
-                          onFailure={this.responseGoogleLogin}
-                        >
-                          {/* <FontAwesomeIcon
+          {/* The Modal SIGN IN login dialog */}
+          <div className="modal fade my-modal" id="myModal-signin">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <button type="button" className="close" data-dismiss="modal">×</button>
+                <div className="modal-body">
+                  <div className="inner-body">
+                    <div className="logo-wrap w-100">
+                      <img src={logoicon} alt="logo"/>
+                    </div>
+                    <div className="modal-heading w-100">
+                      <h1>SIGN IN</h1>
+                      {/* <p>Welcome back</p> */}
+                    </div>
+                    <div className="direct-login">
+                      <GoogleLogin
+                        clientId={'471679444708-h8k7t7r9v876gbbea7tsh7s38pkdrlvm.apps.googleusercontent.com'}
+                        onSuccess={this.responseGoogleLogin}
+                        onFailure={this.responseGoogleLogin}
+                      >
+                        {/* <FontAwesomeIcon
               name='google'
             /> */}
-                          <span> <b> Login</b> with  <b> Google</b></span>
-                        </GoogleLogin>
-                        {/* <p className="no-margin">or</p>
+                        <span> <b> Login</b> with  <b> Google</b></span>
+                      </GoogleLogin>
+                      {/* <p className="no-margin">or</p>
                     <div><img src={facebook} alt="logo" /></div> */}
-                      </div>
+                    </div>
 
-                      <div className="modal-inner-content">
-                        <form className="form">
-                          <p
-                            className="md-login-err warning-color">{this.state.loginError ? this.state.loginError : ''}</p>
+                    <div className="modal-inner-content">
+                      <form className="form">
+                        <p
+                          className="md-login-err warning-color">{this.state.loginError ? this.state.loginError : ''}</p>
 
-                          <div className="row">
-                            <div className="col-4 offset-4">
+                        <div className="row">
+                          <div className="col-4 offset-4">
 
-                              <div className="form-group">
-                                <label htmlFor="weight">User Name</label>
-                                <input type="email" value={this.state.email ? this.state.email : ''}
-                                       onChange={event => this.setState({email: event.target.value})}
-                                       className="form-control modal-form-input"/>
-                              </div>
-                              <div className="form-group input-group">
-                                <label htmlFor="password">Password</label>
-                                <input type="password"
-                                       value={this.state.pwd ? this.state.pwd : ''}
-                                       onChange={event => this.setState({pwd: event.target.value})}
-                                       className="form-control modal-form-input"/>
-                                {/* <div className="input-group-append">
+                            <div className="form-group">
+                              <label htmlFor="weight">User Name</label>
+                              <input type="email" value={this.state.email ? this.state.email : ''}
+                                     onChange={event => this.setState({email: event.target.value})}
+                                     className="form-control modal-form-input"/>
+                            </div>
+                            <div className="form-group input-group">
+                              <label htmlFor="password">Password</label>
+                              <input type="password"
+                                     value={this.state.pwd ? this.state.pwd : ''}
+                                     onChange={event => this.setState({pwd: event.target.value})}
+                                     className="form-control modal-form-input"/>
+                              {/* <div className="input-group-append">
                               <i className="fa fa-check" aria-hidden="true" />
                             </div> */}
-                              </div>
+                            </div>
 
-                              <div className="text-center">
-                                <button type="button"
-                                        onClick={this.logIn}
-                                        className="btn global-btn">Sign In
-                                </button>
-                              </div>
+                            <div className="text-center">
+                              <button type="button"
+                                      onClick={this.logIn}
+                                      className="btn global-btn">Sign In
+                              </button>
+                            </div>
 
-                              <div className="text-center">
-                                <p>Forgot password? <span className="blue-color">Click here </span></p>
-                              </div>
+                            <div className="text-center">
+                              <p>Forgot password? <span className="blue-color">Click here </span></p>
                             </div>
                           </div>
-                        </form>
-                      </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <section className="banner">
-              <img src={logobg}/>
-              <div className="overlay-wrap">
-                <div className="row">
-                  <div className="col-6 offset-5">
-                    <h1>When AI<br/>Meets<br/>Fitness</h1>
-                    {this.state.loginStatus === false ?
-                      <div>
-                        <button type="button" className="btn global-btn mr-10" data-toggle="modal"
-                                onClick={this.openSignUpModel} data-target="#myModal-signup" data-backdrop="static"
-                                data-keyboard="false">Sign Up
-                        </button>
-                        < button type="button" onClick={this.openSignInModel} className="btn global-btn borderd"
-                                 data-toggle="modal"
-                                 data-target="#myModal-signin" data-backdrop="static" data-keyboard="false">Sign In
-                        </button>
-                      </div>
-                      :
-                      <div>
-                        <h3>Welcome {this.state.loginInfo.full_name}</h3>
-                      </div>
-                    }
-                  </div>
-                </div>
-                <div className="social-media">
-                  <ul>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#"><i className="fa fa-facebook-square"/></a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#"><i className="fa fa-instagram"/></a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#"><i className="fa fa-twitter"/></a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#"><i className="fa fa-youtube"/></a>
-                    </li>
-                  </ul>
+          <section className="banner">
+            <img src={logobg}/>
+            <div className="overlay-wrap">
+              <div className="row">
+                <div className="col-6 offset-5">
+                  <h1>When AI<br/>Meets<br/>Fitness</h1>
+                  {this.state.loginStatus === false ?
+                    <div>
+                      <button type="button" className="btn global-btn mr-10" data-toggle="modal"
+                              onClick={this.openSignUpModel} data-target="#myModal-signup" data-backdrop="static"
+                              data-keyboard="false">Sign Up
+                      </button>
+                      < button type="button" onClick={this.openSignInModel} className="btn global-btn borderd"
+                               data-toggle="modal"
+                               data-target="#myModal-signin" data-backdrop="static" data-keyboard="false">Sign In
+                      </button>
+                    </div>
+                    :
+                    <div>
+                      <h3>Welcome {this.state.loginInfo.full_name}</h3>
+                    </div>
+                  }
                 </div>
               </div>
-            </section>
+              <div className="social-media">
+                <ul>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#"><i className="fa fa-facebook-square"/></a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#"><i className="fa fa-instagram"/></a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#"><i className="fa fa-twitter"/></a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="#"><i className="fa fa-youtube"/></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
-          </div>
+        </div>
         }
       </div>
     );
