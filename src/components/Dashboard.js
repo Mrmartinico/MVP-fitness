@@ -30,134 +30,11 @@ class Dashboard extends Component {
       }
     }).then(response => response.json()).then(res => {
       console.log(' >>>> SESSIONS', res);
-      const data = {
-        "sessions": [{
-          "id": "sess_001",
-          "week_day": "wednesday",
-          "session_date": "2019-11-16",
-          "start_time": "2019-11-16T14:07:26Z",
-          "end_time": "2019-11-16T16:07:31Z",
-          "session_duraton": "2.00",
-          "session_path": "''",
-          "current_specialization_type": "Yoga",
-          "instructor_username": "niccolo",
-          "expertise_specification": null,
-          "expertise_types": [{
-            "specialization_type": "Yoga",
-            "description": "hjdjjbdbddbjhbcc jcbjhxbhjx"
-          }, {"specialization_type": "salsa", "description": "njknfjfbkjkbd"}],
-          "upcoming_sessions": []
-        }, {
-          "id": "sess_002",
-          "week_day": "Monday",
-          "session_date": "2019-11-16",
-          "start_time": "2019-11-16T15:09:32Z",
-          "end_time": "2019-11-16T17:09:57Z",
-          "session_duraton": "2.00",
-          "session_path": "''''",
-          "current_specialization_type": "salsa",
-          "instructor_username": "niccolo",
-          "expertise_specification": null,
-          "expertise_types": [{
-            "specialization_type": "Yoga",
-            "description": "hjdjjbdbddbjhbcc jcbjhxbhjx"
-          }, {"specialization_type": "salsa", "description": "njknfjfbkjkbd"}],
-          "upcoming_sessions": []
-        }, {
-          "id": "sess_003",
-          "week_day": "wednesday",
-          "session_date": "2019-11-16",
-          "start_time": "2019-11-16T18:12:03Z",
-          "end_time": "2019-11-16T21:12:10Z",
-          "session_duraton": "3.00",
-          "session_path": "''''",
-          "current_specialization_type": "Yoga",
-          "instructor_username": "niccolo",
-          "expertise_specification": null,
-          "expertise_types": [{
-            "specialization_type": "Yoga",
-            "description": "hjdjjbdbddbjhbcc jcbjhxbhjx"
-          }, {"specialization_type": "salsa", "description": "njknfjfbkjkbd"}],
-          "upcoming_sessions": [{
-            "id": "sess_004",
-            "week_day": "Friday",
-            "session_date": "2019-11-16",
-            "start_time": "2019-11-17T14:15:47Z",
-            "end_time": "2019-11-17T16:15:53Z",
-            "session_duraton": "2.00",
-            "session_path": "''''",
-            "current_specialization_type": "salsa"
-          }]
-        }]
-      };
-      if (data && data.sessions.length) {
-        this.setState({sessions: res && res.sessions.length ? res.sessions.length : data.sessions})
+      if (res && res.sessions.length) {
+        this.setState({sessions: res.sessions})
       }
     }).catch(err => {
       console.log(err);
-      const data = {
-        "sessions": [{
-          "id": "sess_001",
-          "week_day": "wednesday",
-          "session_date": "2019-11-16",
-          "start_time": "2019-11-16T14:07:26Z",
-          "end_time": "2019-11-16T16:07:31Z",
-          "session_duraton": "2.00",
-          "session_path": "''",
-          "current_specialization_type": "Yoga",
-          "instructor_username": "niccolo",
-          "expertise_specification": null,
-          "expertise_types": [{
-            "specialization_type": "Yoga",
-            "description": "hjdjjbdbddbjhbcc jcbjhxbhjx"
-          }, {"specialization_type": "salsa", "description": "njknfjfbkjkbd"}],
-          "upcoming_sessions": []
-        }, {
-          "id": "sess_002",
-          "week_day": "Monday",
-          "session_date": "2019-11-16",
-          "start_time": "2019-11-16T15:09:32Z",
-          "end_time": "2019-11-16T17:09:57Z",
-          "session_duraton": "2.00",
-          "session_path": "''''",
-          "current_specialization_type": "salsa",
-          "instructor_username": "niccolo",
-          "expertise_specification": null,
-          "expertise_types": [{
-            "specialization_type": "Yoga",
-            "description": "hjdjjbdbddbjhbcc jcbjhxbhjx"
-          }, {"specialization_type": "salsa", "description": "njknfjfbkjkbd"}],
-          "upcoming_sessions": []
-        }, {
-          "id": "sess_003",
-          "week_day": "wednesday",
-          "session_date": "2019-11-16",
-          "start_time": "2019-11-16T18:12:03Z",
-          "end_time": "2019-11-16T21:12:10Z",
-          "session_duraton": "3.00",
-          "session_path": "''''",
-          "current_specialization_type": "Yoga",
-          "instructor_username": "niccolo",
-          "expertise_specification": null,
-          "expertise_types": [{
-            "specialization_type": "Yoga",
-            "description": "hjdjjbdbddbjhbcc jcbjhxbhjx"
-          }, {"specialization_type": "salsa", "description": "njknfjfbkjkbd"}],
-          "upcoming_sessions": [{
-            "id": "sess_004",
-            "week_day": "Friday",
-            "session_date": "2019-11-16",
-            "start_time": "2019-11-17T14:15:47Z",
-            "end_time": "2019-11-17T16:15:53Z",
-            "session_duraton": "2.00",
-            "session_path": "''''",
-            "current_specialization_type": "salsa"
-          }]
-        }]
-      };
-      if (data && data.sessions.length) {
-        this.setState({sessions: data.sessions})
-      }
     })
   };
 
@@ -170,38 +47,11 @@ class Dashboard extends Component {
       }
     }).then(response => response.json()).then(res => {
       console.log(' >>>> Home Stats', res);
-      const data = {
-        "statistics": {
-          "session_accuracy": 85.78,
-          "session_completed": 5,
-          "total_hours": 11.8,
-          "rewards": {
-            "sessions_completed": 18,
-            "remaining_sessions": 2
-          },
-          "community_percentage": 10
-        }
-      };
-      if (data && data.statistics && data.statistics.community_percentage) {
-        this.setState({stats: data.statistics});
+      if (res && res.statistics && res.statistics.community_percentage) {
+        this.setState({stats: res.statistics});
       }
     }).catch(err => {
       console.log(err);
-      const data = {
-        "statistics": {
-          "session_accuracy": 85.78,
-          "session_completed": 5,
-          "total_hours": 11.8,
-          "rewards": {
-            "sessions_completed": 100,
-            "remaining_sessions": 50
-          },
-          "community_percentage": 10
-        }
-      };
-      if (data && data.statistics && data.statistics.community_percentage) {
-        this.setState({stats: data.statistics});
-      }
     })
   };
 
@@ -213,46 +63,11 @@ class Dashboard extends Component {
       }
     }).then(response => response.json()).then(res => {
       console.log(' >>>> Instructors Stats', res);
-      const data = {
-        "instructors_details": [
-          {
-            "first_name": "Niccolo",
-            "last_name": "antinucci",
-            "username": "niccolo",
-            "profile_image": null
-          },
-          {
-            "first_name": "Niccolo",
-            "last_name": "antinucci",
-            "username": "niccolo",
-            "profile_image": null
-          }
-        ]
-      };
-      if (data && data.instructors_details.length) {
-        this.setState({instructorList: data.instructors_details})
+      if (res && res.instructors_details.length) {
+        this.setState({instructorList: res.instructors_details})
       }
     }).catch(err => {
       console.log(err);
-      const data = {
-        "instructors_details": [
-          {
-            "first_name": "Niccolo",
-            "last_name": "antinucci",
-            "username": "niccolo",
-            "profile_image": null
-          },
-          {
-            "first_name": "Niccolo",
-            "last_name": "antinucci",
-            "username": "niccolo",
-            "profile_image": null
-          }
-        ]
-      };
-      if (data && data.instructors_details.length) {
-        this.setState({instructorList: data.instructors_details})
-      }
     })
   };
 
@@ -270,7 +85,13 @@ class Dashboard extends Component {
   }
 
   handelLogout = () => {
-    this.props.onLogOut();
+    // this.props.onLogOut();
+    console.log('logging out ??');
+    localStorage.setItem(LOCAL_STORAGE_KEY, '');
+    this.setState({loginInfo: ''});
+    this.setState({loginStatus: false});
+    this.props.history.push('/');
+
   };
 
 
