@@ -93,6 +93,10 @@ class Dashboard extends Component {
     this.props.history.push('/');
 
   };
+  goLive = () => {
+    this.props.history.push('/live');
+
+  };
 
 
   render() {
@@ -155,7 +159,7 @@ class Dashboard extends Component {
                         <h4>{item.current_specialization_type}</h4>
                         <p>{item.instructor_username}</p>
                         <div className="text-center">
-                          <button type="button" className="btn global-btn">Play</button>
+                          <button type="button" className="btn global-btn" onClick={this.goLive}>Play</button>
                           <button type="button" className="btn global-btn borderd tiny-btn">Remind me</button>
                         </div>
                       </div>
