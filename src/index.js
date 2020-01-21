@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import * as serviceWorker from './serviceWorker';
 import "video-react/dist/video-react.css";
 import {LOCAL_STORAGE_KEY} from "./common/urlconstants";
+import LiveYoga from "./components/LiveYoga";
 
 
 function PrivateRoute({component: Component, ...rest}) {
@@ -30,6 +31,7 @@ const routing = (
     <Route path='/' exact component={App}/>
     <Route path='/login' exact component={App}/>
     <PrivateRoute path='/dashboard' component={Dashboard}/>
+    <PrivateRoute path='/live' component={LiveYoga}/>
   </Router>
 );
 
