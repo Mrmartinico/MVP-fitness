@@ -778,9 +778,7 @@ class App extends React.Component {
               </div>
             </div>
           </section>
-
         </div>
-        }
       </div>
     );
   }

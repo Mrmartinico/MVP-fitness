@@ -19,120 +19,122 @@ let similarity = new CosineSimilarity(true, 0.85);
  */
 function detectPoseInRealTime(video, net, confront_pose) {
   console.log(net);
-    const canvas = document.getElementById('output');
-    const ctx = canvas.getContext('2d');
+  const canvas = document.getElementById('output');
+  const ctx = canvas.getContext('2d');
+  ctx.filter = 'grayscale(100%)';
 
-    canvas.width = videoWidth;
-    canvas.height = videoHeight;
+  canvas.width = videoWidth;
+  canvas.height = videoHeight;
 
-    async function poseDetection() {
-      let poses = [];
+  async function poseDetection() {
+    let poses = [];
 
-      let all_poses = await net.estimatePoses(video, {
-        flipHorizontal: true,
-        decodingMethod: 'multi-person',
-        maxDetections: 2,
-        scoreThreshold: 0.6,
-      });
+    let all_poses = await net.estimatePoses(video, {
+      flipHorizontal: true,
+      decodingMethod: 'multi-person',
+      maxDetections: 2,
+      scoreThreshold: 0.6,
+    });
 
-      poses = poses.concat(all_poses);
+    poses = poses.concat(all_poses);
 
-      ctx.clearRect(0, 0, videoWidth, videoHeight);
+    ctx.clearRect(0, 0, videoWidth, videoHeight);
 
-      ctx.save();
-      ctx.scale(-1, 1);
-      ctx.translate(-videoWidth, 0);
-      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-      ctx.restore();
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.translate(-videoWidth, 0);
+    ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    ctx.restore();
 
 
-      poses.forEach(({score, keypoints}) => {
-        if ( keypoints && score >= minPoseConfidence) {
-            console.log(keypoints);
-            var user_poses = localStorage.getItem('user_poses')
-            var inst_poses = localStorage.getItem('inst_poses')
-            var user_user = [] , inst_inst= []
+    poses.forEach(({score, keypoints}) => {
+      if (keypoints && score >= minPoseConfidence) {
+        console.log(keypoints);
+        var user_poses = localStorage.getItem('user_poses')
+        var inst_poses = localStorage.getItem('inst_poses')
+        var user_user = [], inst_inst = []
 
-            if (user_poses && inst_poses  ){
-                user_user = JSON.parse(user_poses)
-                inst_inst = JSON.parse(inst_poses)
-            }
-            console.log('hi', user_user, 'hi hi', inst_inst)
-            localStorage.setItem('user_poses', JSON.stringify(keypoints))
-            drawKeypoints(keypoints, minPartConfidence, ctx);
-            drawSkeleton(keypoints, minPartConfidence, ctx);
-            //drawBoundingBox(keypoints, ctx);
-
-            //console.log(similarity.calculate({score, keypoints}, confront_pose));
+        if (user_poses && inst_poses) {
+          user_user = JSON.parse(user_poses)
+          inst_inst = JSON.parse(inst_poses)
         }
-      });
+        console.log('hi', user_user, 'hi hi', inst_inst)
+        localStorage.setItem('user_poses', JSON.stringify(keypoints))
+        drawKeypoints(keypoints, minPartConfidence, ctx);
+        drawSkeleton(keypoints, minPartConfidence, ctx);
+        //drawBoundingBox(keypoints, ctx);
 
-      requestAnimationFrame(poseDetection);
+        //console.log(similarity.calculate({score, keypoints}, confront_pose));
+      }
+    });
 
-    }
+    requestAnimationFrame(poseDetection);
 
-    poseDetection();
+  }
+
+  poseDetection();
 }
+
 /* instructor*/
-function detectPoseInstructor(video, net, confront_pose){
+function detectPoseInstructor(video, net, confront_pose) {
   console.log(net);
-    var canvas = document.getElementById('c');
-    var ctx = canvas.getContext('2d');
-    var video = document.getElementById('vid_inst');
+  var canvas = document.getElementById('c');
+  var ctx = canvas.getContext('2d');
+  var video = document.getElementById('vid_inst');
 
-    canvas.width = videoWidth;
-    canvas.height = videoHeight;
+  canvas.width = videoWidth;
+  canvas.height = videoHeight;
 
-    video.addEventListener('play', function() {
-      var $this = this; //cache
-      (function loop() {
-        if (!$this.paused && !$this.ended) {
-          ctx.drawImage($this, 0, 0);
-          setTimeout(loop, 1000 / 30); // drawing at 30fps
-        }
-      })();
-    }, 0)
+  video.addEventListener('play', function () {
+    var $this = this; //cache
+    (function loop() {
+      if (!$this.paused && !$this.ended) {
+        ctx.drawImage($this, 0, 0);
+        setTimeout(loop, 1000 / 30); // drawing at 30fps
+      }
+    })();
+  }, 0)
 
-    async function poseDetection() {
-      let poses_inst = [];
+  async function poseDetection() {
+    let poses_inst = [];
 
-      let all_poses = await net.estimatePoses(video, {
-        flipHorizontal: true,
-        decodingMethod: 'multi-person',
-        maxDetections: 2,
-        scoreThreshold: 0.6,
-      });
+    let all_poses = await net.estimatePoses(video, {
+      flipHorizontal: true,
+      decodingMethod: 'multi-person',
+      maxDetections: 2,
+      scoreThreshold: 0.6,
+    });
 
-      poses_inst = poses_inst.concat(all_poses);
+    poses_inst = poses_inst.concat(all_poses);
 
-      ctx.clearRect(0, 0, videoWidth, videoHeight);
+    ctx.clearRect(0, 0, videoWidth, videoHeight);
 
-      ctx.save();
-      ctx.scale(-1, 1);
-      ctx.translate(-videoWidth, 0);
-      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-      ctx.restore();
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.translate(-videoWidth, 0);
+    ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    ctx.restore();
 
-      poses_inst.forEach((obj) => {
-        // console.log(obj);
-        if (obj.keypoints && obj.score >= minPoseConfidence ) {
-            // console.log(keypoints_inst);
-            console.log('instructor',obj.keypoints)
-            var instructor_poses = localStorage.getItem('inst_poses')
-            localStorage.setItem('inst_poses', JSON.stringify(obj.keypoints))
-            drawKeypoints_inst(obj.keypoints, minPartConfidence, ctx);
-            drawSkeleton_inst(obj.keypoints, minPartConfidence, ctx);
-            //drawBoundingBox(keypoints, ctx);
+    poses_inst.forEach((obj) => {
+      // console.log(obj);
+      if (obj.keypoints && obj.score >= minPoseConfidence) {
+        // console.log(keypoints_inst);
+        console.log('instructor', obj.keypoints)
+        var instructor_poses = localStorage.getItem('inst_poses')
+        localStorage.setItem('inst_poses', JSON.stringify(obj.keypoints))
+        drawKeypoints_inst(obj.keypoints, minPartConfidence, ctx);
+        drawSkeleton_inst(obj.keypoints, minPartConfidence, ctx);
+        //drawBoundingBox(keypoints, ctx);
 
-            //console.log(similarity.calculate({score, keypoints}, confront_pose));
-        }
-      });
+        //console.log(similarity.calculate({score, keypoints}, confront_pose));
+      }
+    });
 
-      requestAnimationFrame(poseDetection);
+    requestAnimationFrame(poseDetection);
 
-    }
+  }
 
-    poseDetection();
+  poseDetection();
 
 }
 
@@ -156,14 +158,13 @@ export async function bindPage(confront_pose) {
   const net = await model.load();
 
   let video;
-  let video_instructor = document.getElementById('vid_inst')
+  let video_instructor = document.getElementById('vid_inst');
   try {
     video = await loadVideo();
   } catch (e) {
     console.log(e);
-    throw e;
   }
   detectPoseInRealTime(video, net, confront_pose);
-  detectPoseInstructor(video_instructor, net, confront_pose )
+  detectPoseInstructor(video_instructor, net, confront_pose)
 }
 
