@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {GET_INSTRUCTORS, getHomeStatsURL, getSessionURL, LOCAL_STORAGE_KEY} from "../common/urlconstants";
 import CommonHeader from "./CommonHeader";
+import {segmentIdentity} from "./utils";
 
 
 class Rewards extends Component {
@@ -73,7 +74,9 @@ class Rewards extends Component {
 
   async componentDidMount() {
     try {
-      Rewards.userInfo = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+      Rewards.userInfo = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+      window.analytics.page('Rewards');
+
       this.getHomeStats();
 
     } catch (error) {
@@ -105,8 +108,8 @@ class Rewards extends Component {
 
                 <div className="row align-items-end">
                   <div className="col-7 " style={{padding: '0px 0px 0px 5%'}}>
-                    <h2 className="color-white" >REWARDS</h2>
-                    <h6 className="color-white" >Complete Sessions to unlock new and exclusive
+                    <h2 className="color-white">REWARDS</h2>
+                    <h6 className="color-white">Complete Sessions to unlock new and exclusive
                       rewards</h6>
                     <div className="row mt-4">
                       <div className="col ">
@@ -132,8 +135,9 @@ class Rewards extends Component {
                     </div>
                   </div>
                   <div className="col-5 text-center">
-                    <h1 style={{fontSize:'144px'}}>5</h1>
-                    <h6 className="color-white" style={{margin: '1% 0px 0px 7%'}}>Complete Sessions to unlock new and exclusive
+                    <h1 style={{fontSize: '144px'}}>5</h1>
+                    <h6 className="color-white" style={{margin: '1% 0px 0px 7%'}}>Complete Sessions to unlock new and
+                      exclusive
                       rewards</h6>
                   </div>
 

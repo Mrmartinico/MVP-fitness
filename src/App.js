@@ -45,6 +45,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    window.analytics.page('Home');
     console.log('>> componentDidMount', localStorage.getItem(LOCAL_STORAGE_KEY));
 
     // once the component has mount, start the classification
@@ -304,6 +305,7 @@ class App extends React.Component {
   closeSignUpModel = () => {
     window.$('#myModal-signup').modal('toggle');
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.loginInfo));
+
     this.props.history.push('/dashboard');
 
   };
@@ -569,10 +571,12 @@ class App extends React.Component {
 
 
   openSignUpModel = () => {
+    window.analytics.page('Signup');
     this.setState({signUpPage: 0, error: '', success: ''});
 
   };
   openSignInModel = () => {
+    window.analytics.page('Login');
     this.setState({error: '', success: ''});
 
   };

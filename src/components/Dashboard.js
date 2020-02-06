@@ -3,6 +3,7 @@ import instrDefaultImg from '../assests/instructor.png';
 import session_def_img from '../assests/session_img.png';
 import {GET_INSTRUCTORS, getHomeStatsURL, getSessionURL, LOCAL_STORAGE_KEY} from "../common/urlconstants";
 import CommonHeader from "./CommonHeader";
+import {segmentIdentity} from "./utils";
 
 
 class Dashboard extends Component {
@@ -76,6 +77,8 @@ class Dashboard extends Component {
   async componentDidMount() {
     try {
       Dashboard.userInfo = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+      segmentIdentity(Dashboard.userInfo);
+      window.analytics.page('Rewards');
       this.getSessions();
       this.getHomeStats();
       this.getInstructors();
@@ -110,7 +113,7 @@ class Dashboard extends Component {
           <CommonHeader history={this.props.history} value={'dashboard'}/>
 
           <div className="scroll-db">
-            <section className="db-banner db-bg" style={{'overflow-x': 'hidden'}}>
+            <section className="db-banner db-bg" style={{overflowX: 'hidden'}}>
               <div id="header">
                 <div className="row">
                   <div className="col-md-7">
@@ -148,6 +151,8 @@ class Dashboard extends Component {
                         <img src={session_def_img} alt="logo"/>
                         <div className="parallex"
                              style={{background: 'rgba(255, 0, 213, 0.5)'}}> {o.instructor_username}   </div>
+                        <div className="parallex-bottom"
+                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Michael teaches you the basics of Yoga   </div>
                       </div>
                       <div className="row">
                         <div className="col">
@@ -233,6 +238,8 @@ class Dashboard extends Component {
                         <img src={instrDefaultImg} alt="logo"/>
                         <div className="parallex"
                              style={{background: 'rgba(56, 44, 251, 0.5)'}}> {o.first_name + ' ' + o.last_name}   </div>
+                        <div className="parallex-bottom"
+                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Learn Bikram with Michael   </div>
                       </div>
                       <div className="row">
                         <div className="col">

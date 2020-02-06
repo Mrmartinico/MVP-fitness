@@ -75,7 +75,7 @@ class CommonHeader extends Component {
               <div className="input-group-prepend">
                 <span className="input-group-text" id="basic-addon1"><i className="fa fa-search"/></span>
               </div>
-              <input type="text" className="form-control search-input" aria-describedby="basic-addon1"/>
+              <input type="text" style={{caretColor:'white'}} className="form-control search-input" aria-describedby="basic-addon1"/>
 
             </div>
           </div>

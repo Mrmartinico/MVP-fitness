@@ -586,8 +586,10 @@ h1 {
 }
 
 .instructor .box {
-    width: 280px;
-    height: 181px;
+    /*width: 280px;*/
+    /*height: 181px;*/
+    width: 324px;
+    height: 210px;
     overflow: hidden;
     border-radius: 0px;
     position: relative;
@@ -602,6 +604,14 @@ h1 {
     position: absolute;
     top: 0;
     color: black;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+}
+.parallex-bottom {
+    position: absolute;
+    bottom: 0;
+    color: white;
     font-weight: 600;
     padding: 10px;
     margin: 10px;
