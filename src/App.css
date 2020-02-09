@@ -374,7 +374,11 @@ h1 {
 }
 
 .mt-10 {
-    margin-top: 10px;
+    margin-top: 10px !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
 }
 
 .btn-facebook {
@@ -397,6 +401,21 @@ h1 {
 .scroll-db {
     overflow: auto;
     /*height: 800px;*/
+}
+
+.btn-outline-light {
+    box-sizing: border-box;
+    font-style: normal;
+    padding: 3px 20px;
+    margin-right: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    border-radius: 22.5px;
+    width: 130px;
+    height: 30px;
 }
 
 .com-button {
@@ -579,6 +598,93 @@ h1 {
     width: 60%;
 }
 
+.rewards-w2 {
+    overflow-x: hidden;
+}
+
+.rewards-w2 img {
+    width: 361px;
+    height: 565px;
+}
+
+
+.rewards-w2 .parallex {
+    position: absolute;
+    top: 0;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+}
+
+.rewards-w3 {
+    overflow-x: hidden;
+}
+
+.br-0 {
+    border-radius: 0 !important;
+}
+
+.rewards-w3 img {
+    width: 361px;
+    height: 565px;
+}
+
+
+.rewards-w3 .parallex {
+    position: absolute;
+    top: 0;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+}
+
+.rewards-w3 .parallex-p {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+}
+
+.rewards-w2 .parallex-bottom {
+    position: absolute;
+    bottom: 50%;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+    top: 38%;
+    left: 15%;
+}
+
+.rewards-w3 .parallex-bottom {
+    position: absolute;
+    bottom: 50%;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    margin: 10px;
+    top: 38%;
+    left: 15%;
+}
+
+.img-btn {
+    margin-top: 20px;
+    width: 158px;
+    height: 30px;
+    background: #FFFFFF;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+
 .custome-progress {
     background: #382CFB;
     border-radius: 0px;
@@ -608,6 +714,7 @@ h1 {
     padding: 10px;
     margin: 10px;
 }
+
 .parallex-bottom {
     position: absolute;
     bottom: 0;

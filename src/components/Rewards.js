@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {GET_INSTRUCTORS, getHomeStatsURL, getSessionURL, LOCAL_STORAGE_KEY} from "../common/urlconstants";
 import CommonHeader from "./CommonHeader";
-import {segmentIdentity} from "./utils";
+import instrDefaultImg from "../assests/rewards_w2.png";
+import instrDefaultImgw2 from "../assests/rewards_w3.png";
 
 
 class Rewards extends Component {
@@ -16,7 +17,8 @@ class Rewards extends Component {
     this.state = {
       sessions: [],
       stats: {},
-      instructorList: [],
+      instructorList: [1, 2, 3, 4],
+      instructorList2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12],
       errMsg: 'Loading...please be patient...'
     }
   }
@@ -145,6 +147,67 @@ class Rewards extends Component {
                 </div>
                 : <p className="white">Please wait...</p>}
 
+            </section>
+            <section className="session instructor rewards-w2">
+              <div>
+                {this.state.instructorList.length === 0 ?
+                  <p className="section-heading">No Instructor available</p> : ''}
+
+                <div className="row">
+                  {this.state.instructorList.map((o, index) =>
+                    <div className="col-3">
+                      <img src={instrDefaultImg} alt="logo"/>
+                      <div className="parallex"
+                      > 0{index + 1}
+                      </div>
+                      <div className="parallex-bottom">
+                        <b>TSX</b>
+                        <p className="mt-10">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <button type="button" className="btn img-btn br-0">Play</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+
+              <div className="text-center mt-10 mb-10">
+                <button type="button" className="btn btn-outline-light active">All</button>
+                <button type="button" className="btn btn-outline-light">Next 5 sessions</button>
+                <button type="button" className="btn btn-outline-light">Next 8 sessions</button>
+                <button type="button" className="btn btn-outline-light">Next 12 sessions</button>
+                <button type="button" className="btn btn-outline-light">Next 20 sessions</button>
+              </div>
+            </section>
+            <section className="session instructor rewards-w3">
+              <div>
+                {this.state.instructorList2.length === 0 ?
+                  <p className="section-heading">No Instructor available</p> : ''}
+
+                <div className="row">
+                  {this.state.instructorList2.map((o, index) =>
+                    <div className="col-3">
+                      <img src={instrDefaultImgw2} alt="logo"/>
+                      <div className="parallex"
+                      > {index + 1}
+                      </div>
+                      <p className="parallex-p">5 more sessions</p>
+                      <div className="parallex-bottom">
+                        <b>TSX</b>
+                        <p className="mt-10">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <button type="button" className="btn br-0 img-btn">Preview</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+
+              <div className="text-center mt-10 mb-10">
+                <button type="button" className="btn btn-outline-light active">Load more</button>
+              </div>
             </section>
 
           </div>

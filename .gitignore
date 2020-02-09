@@ -9,6 +9,7 @@ src/vedio
 *.mp4
 *.mpeg
 *.webm
+.idea
 
 # testing
 /coverage
