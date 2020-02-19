@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import defaultImg from '../assests/yoga.jpg';
-import logoicon from '../assests/logo-1.jpg';
+import instrDefaultImg from '../assests/instructor.png';
+import session_def_img from '../assests/session_img.png';
 import {GET_INSTRUCTORS, getHomeStatsURL, getSessionURL, LOCAL_STORAGE_KEY} from "../common/urlconstants";
+import CommonHeader from "./CommonHeader";
+import {segmentIdentity} from "./utils";
 
 
 class Dashboard extends Component {
@@ -75,6 +77,8 @@ class Dashboard extends Component {
   async componentDidMount() {
     try {
       Dashboard.userInfo = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+      segmentIdentity(Dashboard.userInfo);
+      window.analytics.page('Rewards');
       this.getSessions();
       this.getHomeStats();
       this.getInstructors();
@@ -97,137 +101,165 @@ class Dashboard extends Component {
     this.props.history.push('/live');
 
   };
+  goToRewards = () => {
+    this.props.history.push('/rewards');
+  };
 
 
   render() {
     return (
       <div>
         <div className="db-body">
-          <header className="top-header">
-            <div className="logo">
-              <img src={logoicon} alt="logo"/>
-            </div>
-            <div className="search-wrapper">
-              <div className="input-group">
-                <input type="text" className="form-control" aria-describedby="basic-addon1"/>
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1"><i className="fa fa-search"/></span>
-                </div>
-              </div>
-            </div>
-            <div className="user-setting">
-              <div className="setting">
-                <div className="user-name">{Dashboard.userInfo.full_name || 'User'}</div>
-                <div className="user-avatar">
-                </div>
-                <div className="user-name nav-link" onClick={this.handelLogout}>LogOut</div>
+          <CommonHeader history={this.props.history} value={'dashboard'}/>
 
-              </div>
-            </div>
-          </header>
           <div className="scroll-db">
-            <section className="main-container">
-              <nav className="navbar navbar-expand-lg db-nav">
-                <div className="collapse navbar-collapse">
-                  <ul className="navbar-nav">
-                    <li className="nav-item active">
-                      <a className="nav-link nav-ex-btn" href="#">Home</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Session</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">My Status</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link " href="#">Rewards</a>
-                    </li>
-                  </ul>
+            <section className="db-banner db-bg" style={{overflowX: 'hidden'}}>
+              <div id="header">
+                <div className="row">
+                  <div className="col-md-7">
+                    <h2 className="white">Morning Yoga <br/>
+                      to start your day</h2>
+                    <div className="m-0">
+                      <img className="img-user" style={{height: '50px', width: '50px'}} src={instrDefaultImg}/>
+                      <b className="white" style={{paddingLeft: '10px'}}>With Micheal</b>
+                    </div>
+                    <h6 className="gray-d">Start you day with a great yoga class.
+                      This activity will be beneficial for your body
+                      as it will activate the blood in your system.
+                    </h6>
+                    <br/>
+                    <button onClick={this.goLive} className="btn-play">Play now</button>
+                    &nbsp;&nbsp;
+                    <button className="btn-calender">Add to calender</button>
+                  </div>
                 </div>
-              </nav>
-              <section className="session mt-50">
-                <div className="section-heading">Session</div>
-                <div className="session-container">
-                  {this.state.sessions.length === 0 ? <p className="section-heading">No Session available</p> : ''}
+              </div>
 
-                  {this.state.sessions.map((item) =>
-                    <div className="box">
-                      <div className="box-img">
-                        <img src={defaultImg} alt="logo"/>
+            </section>
+            <section className="main-container">
+
+
+              <section className="session mt-50 mb-5 instructor" style={{}}>
+                <div className="section-heading ">POPULAR SESSIONS</div>
+                <div className="session-container" style={{flexWrap: 'wrap'}}>
+                  {this.state.sessions.length === 0 ?
+                    <p className="section-heading">No sessions available</p> : ''}
+
+                  {this.state.sessions.map(o =>
+                    <div style={{margin: '10px'}}>
+                      <div className="box" key={o.id}>
+                        <img src={session_def_img} alt="logo"/>
+                        <div className="parallex"
+                             style={{background: 'rgba(255, 0, 213, 0.5)'}}> {o.instructor_username}   </div>
+                        <div className="parallex-bottom"
+                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Michael teaches you the basics of Yoga   </div>
                       </div>
-                      <div className="box-content">
-                        <h4>{item.current_specialization_type}</h4>
-                        <p>{item.instructor_username}</p>
-                        <div className="text-center">
-                          <button type="button" className="btn global-btn" onClick={this.goLive}>Play</button>
-                          <button type="button" className="btn global-btn borderd tiny-btn">Remind me</button>
+                      <div className="row">
+                        <div className="col">
+                          <p className="color-white">01/01/2020</p>
+                        </div>
+                        <div className="col-4 text-end ">
+                          <p className="color-white">550 views</p>
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
-              </section>
-              <section className="session stats mt-50 nested-elem">
-                <div className="section-heading">Stats</div>
-                <div className="session-container">
-                  <div className="box text-center active-box">
-                    <h4>Top {this.state.stats.community_percentage}%</h4>
-                    <p>Within the fitness community</p>
-                  </div>
-                  <div className="box text-center">
-                    <i className="fa fa-bullseye"/>
-                    <h4>{this.state.stats.session_accuracy}%</h4>
-                    <p>Average Accuracy</p>
-                  </div>
-                  <div className="box text-center">
-                    <i className="fa fa-bullseye"/>
-                    <h4>{this.state.stats.total_hours}hr</h4>
-                    <p>Total time spent</p>
-                  </div>
-                  <div className="box text-center">
-                    <i className="fa fa-bullseye"/>
-                    <h4>{this.state.stats.session_completed}</h4>
-                    <p>Number of sessions completed</p>
-                  </div>
+
+                < div className="text-center mt-1">
+                  <button className="com-button">View all</button>
                 </div>
               </section>
-              <section className="session stats mt-50 nested-elem Rewards">
-                <div className="section-heading">Rewards</div>
-                <div className="session-container">
-                  <div className="box">
-                    {this.state.stats && this.state.stats.rewards && this.state.stats.rewards.sessions_completed ?
-                      <div>
-                        <h4>{this.state.stats.rewards.sessions_completed} SESSIONS COMPLETED</h4>
-                        < p
-                          className="text-right"> {this.state.stats.rewards.remaining_sessions} of {this.state.stats.rewards.sessions_completed}</p>
-                        <div className="progress" style={{borderRadius: '25px', margin: '6px 0px'}}>
-                          <div className="progress-bar custome-progress" role="progressbar"
-                               style={{width: (Math.round((this.state.stats.rewards.remaining_sessions / this.state.stats.rewards.sessions_completed) * 100)) + '%'}}
-                               aria-valuenow={Math.round((this.state.stats.rewards.remaining_sessions / this.state.stats.rewards.sessions_completed) * 100)}
-                               aria-valuemin={0} aria-valuemax={100}/>
-                        </div>
-                        <p>{this.state.stats.rewards.remaining_sessions} Sessions to unlock the next reward</p>
+
+              <section className="session mt-50 " style={{padding: '6% 6%'}}>
+                {/*<div className="section-heading">Session 2</div>*/}
+                {this.state.stats && this.state.stats.rewards && this.state.stats.rewards.sessions_completed ?
+
+                  <div className="">
+                    <div className="row">
+                      <div className="col text-center border-r-1px">
+                        <h1>{this.state.stats.session_accuracy}%</h1>
+                        <p className="color-white">Average Accuracy</p>
                       </div>
-                      : <p>No information available </p>}
+                      <div className="col text-center border-r-1px">
+                        <h1>{this.state.stats.total_hours}hr</h1>
+                        <p className="color-white">Total time spent</p>
+
+                      </div>
+                      <div className="col text-center">
+                        <h1>{this.state.stats.session_completed}</h1>
+                        <p className="color-white">Number of sessions completed</p>
+
+                      </div>
+                    </div>
+
+                    <div className="row mt-4">
+                      <div className="col ">
+                        <h4 className="color-white">{this.state.stats.rewards.sessions_completed} Sessions
+                          Completed</h4>
+                      </div>
+                      <div className="col text-end ">
+                        <p
+                          className="color-white">{this.state.stats.rewards.remaining_sessions} of {this.state.stats.rewards.sessions_completed}</p>
+                      </div>
+
+                    </div>
+
+
+                    <div className="progress" style={{
+                      borderRadius: '0px', transform: 'skew(-20deg)',
+                      background: '#555', height: '20px', margin: '6px 0px'
+                    }}>
+                      <div className="progress-bar custome-progress" role="progressbar"
+                           style={{width: 20 + '%'}}
+                           aria-valuenow={2}
+                           aria-valuemin={0} aria-valuemax={100}/>
+                    </div>
+
+
                   </div>
+                  : <p>No information available </p>}
+
+                <div className="text-center mt-6per">
+
+                  <button className="com-button" onClick={this.goToRewards}> Go to My stats</button>
                 </div>
               </section>
-              <section className="session mt-50 instructor" style={{float: 'left'}}>
-                <div className="section-heading">Instructor</div>
+
+              <section className="session mt-50 mb-5 instructor" style={{}}>
+                <div className="section-heading ">INSTRUCTORS</div>
                 <div className="session-container" style={{flexWrap: 'wrap'}}>
-                  {this.state.instructorList.length === 0 ? <p className="section-heading">No Instructor available</p> : ''}
+                  {this.state.instructorList.length === 0 ?
+                    <p className="section-heading">No Instructor available</p> : ''}
 
                   {this.state.instructorList.map(o =>
-                    <div className="box">
-                      <img src={defaultImg} alt="logo"/>
-                      <div className="parallex"> {o.first_name + ' ' + o.last_name}   </div>
+                    <div style={{margin: '10px'}}>
+                      <div className="box" key={o.id}>
+                        <img src={instrDefaultImg} alt="logo"/>
+                        <div className="parallex"
+                             style={{background: 'rgba(56, 44, 251, 0.5)'}}> {o.first_name + ' ' + o.last_name}   </div>
+                        <div className="parallex-bottom"
+                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Learn Bikram with Michael   </div>
+                      </div>
+                      <div className="row">
+                        <div className="col">
+                          <p className="color-white">Joined 01/01/2020</p>
+                        </div>
+                        <div className="col-4 text-end ">
+                          <p className="color-white">View</p>
+                        </div>
+                      </div>
                     </div>
                   )}
+                </div>
+
+                < div className="text-center mt-1">
+                  <button className="com-button">View all</button>
                 </div>
               </section>
             </section>
-          </div>
 
+          </div>
         </div>
       </div>
     )

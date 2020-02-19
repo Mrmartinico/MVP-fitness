@@ -24,6 +24,7 @@ export const config = {
 function toTuple({x, y}) {
   return [x, y]
 }
+
 // && ["nose","leftEye","rightEye","leftEar","rightEar"].indexOf(keypoint.part)=== -1
 export function drawKeyPoints(
   keypoints,
@@ -33,7 +34,7 @@ export function drawKeyPoints(
   scale = 1
 ) {
   keypoints.forEach(keypoint => {
-    if (keypoint.score >= minConfidence ) {
+    if (keypoint.score >= minConfidence) {
       // console.log(keypoint);
       const {x, y} = keypoint.position;
       canvasContext.beginPath()
@@ -83,4 +84,13 @@ export function drawSkeleton(
       canvasContext
     )
   })
+}
+
+export function segmentIdentity(user) {
+  console.log('ANALYTICS', user);
+  window.analytics.identify(user.id, {
+    name: user.full_name,
+    email: user.email,
+    user_type: user.user_type
+  });
 }
