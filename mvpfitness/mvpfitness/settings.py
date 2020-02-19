@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'home',
+    'rewards',
     'rest_framework'
 ]
 
@@ -73,6 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mvpfitness.wsgi.application'
 
+AUTH_USER_MODEL = "users.User"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -80,7 +82,7 @@ WSGI_APPLICATION = 'mvpfitness.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mvpfitness2',
+        'NAME': 'mvpfitness3',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',

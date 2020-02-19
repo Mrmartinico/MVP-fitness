@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.db.models import Max
+from django.conf import settings
 from users.models import Counter, User
+from rewards.models import RewardSession
 
 
 # Create your models here.
@@ -28,7 +30,7 @@ class Fitness(models.Model):
 class Session(models.Model):
     id = models.CharField(primary_key=True, editable=False, max_length=25)
     fitness_id = models.ForeignKey(Fitness, on_delete='', related_name='fitness_tpypes')
-    instructor_id = models.ForeignKey(User, on_delete='', related_name='user')
+    instructor_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete='', related_name='user')
     week_number = models.IntegerField()
     week_day = models.CharField(max_length=15)
     date = models.DateField()
@@ -48,16 +50,18 @@ class Session(models.Model):
 
 class UserSession(models.Model):
     id = models.CharField(primary_key=True, editable=False, max_length=25)
-    user_id = models.ForeignKey(User, on_delete='')
-    session_id = models.ForeignKey(Session, on_delete='')
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete='')
+    session_id = models.ForeignKey(Session, null=True, on_delete='')
+    reward_id = models.ForeignKey(RewardSession, null=True, on_delete='')
     device_type = models.CharField(max_length=20)
     version = models.CharField(max_length=50, null=True)
     browser = models.CharField(max_length=40, null=True)
     browser_version = models.CharField(max_length=50, null=True)
-    os  = models.CharField(max_length=40, null=True)
+    os = models.CharField(max_length=40, null=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     session_accuracy = models.DecimalField(max_digits=5, decimal_places=2)
+    session_type = models.CharField(max_length=30, null=True)
     impression_count = models.IntegerField()
     ip_address = models.CharField(max_length=30)
     comments = models.TextField(null=True)
