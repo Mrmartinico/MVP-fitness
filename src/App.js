@@ -15,6 +15,8 @@ import logoFacebook from './assests/facebook_logos_PNG19749 1.jpg';
 import logoInstagram from './assests/instagram-logo-text-blue-png 1.jpg';
 import logoTwitter from './assests/twitter-logo 1.jpg';
 
+import lottie from 'lottie-web';
+import animationData  from './lottie/9236-right-arrow.json';
 
 import {GoogleLogin} from 'react-google-login';
 import {Player} from 'video-react';
@@ -45,7 +47,8 @@ class App extends React.Component {
       loginInfo: '',
       signUpType: 'normal',
       media_type: '',
-      media_id: ''
+      media_id: '',
+      animObj: null
     };
   }
 
@@ -65,8 +68,16 @@ class App extends React.Component {
       this.setState({loginStatus: true});
     } else {
       this.setState({loginStatus: false});
-
     }
+
+    //call the loadAnimation to start the animation
+    this.animObj = lottie.loadAnimation({
+      container: this.animBox, // the dom element that will contain the animation
+      renderer: 'canvas',
+      loop: true,
+      autoplay: true,
+      animationData: animationData // the path to the animation json
+    });
   }
 
   responseFacebook = (res) => {
@@ -737,7 +748,7 @@ class App extends React.Component {
           <section className="bannerLanding">
             <div class="container">
               <div class="row">
-                <div class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                <div className ="containeryogaImg" class="col-6 ml-auto text-left mb-5 mb-lg-0">
                   <h2 class="section_title mt-0">Motus</h2>
                   <br></br>
                   <hr className="underliningMotus"></hr>
@@ -752,7 +763,12 @@ class App extends React.Component {
 
                   <div className="bannertxt">
                     <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <button onClick={this.openSignUpModel} className="explorebtn">Explore</button>
+                  </div>
+                  <br></br>
+                  <br></br>
+
+                  <div>
+                    <div className="animBox" ref={ ref => this.animBox = ref}></div>
                   </div>
                 </div>
                 
@@ -760,6 +776,9 @@ class App extends React.Component {
                   <img src={landingImgYogoForEveryone}/> 
                   <div className="expYogatxt"><h2 class="mt-0">Experience Yoga</h2></div>
                   <div className="yogardmtxt"><p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p></div>
+                  <br></br>
+                  <br></br>
+                  <button className="expYogabtn" onClick={this.openSignUpModel}>Start your first session</button>
                 </div> 
               </div>
             </div>
