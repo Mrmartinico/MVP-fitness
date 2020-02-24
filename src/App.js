@@ -1,9 +1,20 @@
 import React from 'react';
 import './App.css';
 
-import logobg from './assests/Home-bg.jpg';
 import logoDummy from './assests/logo.png';
 import logoicon from './assests/logo-1.jpg';
+import landingImgYoga from './assests/yoga-for-strength-jumbo.jpg';
+import landingImgFlex from './assests/yogaflex.jpg';
+import landingImgSquat from './assests/air-squat-josh-bridges1.jpg';
+import landingImgWorkouts from './assests/best-pilates-youtube-workouts-2__medium_4x3.jpg';
+import landingImgGymInstructor from './assests/Gym-Instructor.jpg';
+import landingImgYogoForEveryone from './assests/yoga-for-everyone_promo-superJumbo.jpg';
+
+import logoLinkedin from './assests/1024px-LinkedIn_Logo 1.jpg';
+import logoFacebook from './assests/facebook_logos_PNG19749 1.jpg';
+import logoInstagram from './assests/instagram-logo-text-blue-png 1.jpg';
+import logoTwitter from './assests/twitter-logo 1.jpg';
+
 
 import {GoogleLogin} from 'react-google-login';
 import {Player} from 'video-react';
@@ -36,8 +47,6 @@ class App extends React.Component {
       media_type: '',
       media_id: ''
     };
-
-
   }
 
   getInitialState() {
@@ -60,10 +69,10 @@ class App extends React.Component {
     }
   }
 
-
   responseFacebook = (res) => {
     console.log(res);
   };
+
   responseGoogle = (res) => {
     console.log(res);
     this.setState({signUpPage: this.state.signUpPage + 1});
@@ -175,6 +184,7 @@ class App extends React.Component {
     })
 
   };
+
   responseGoogleLogin = (res) => {
     console.log(res);
     // googleId
@@ -219,7 +229,6 @@ class App extends React.Component {
     }
 
   };
-
 
   logOut = () => {
     console.log('logging out ??');
@@ -274,15 +283,18 @@ class App extends React.Component {
   next = () => {
     this.setState({signUpPage: this.state.signUpPage + 1})
   };
+
   back = () => {
     this.setState({signUpPage: this.state.signUpPage - 1})
 
   };
+
   handleGender = (value) => {
     console.log(value);
     this.setState({gender: value.id})
 
   };
+
   handleActivity = (e) => {
 
     const position = this.state.activity.indexOf(e.target.innerHTML);
@@ -298,10 +310,11 @@ class App extends React.Component {
     this.setState({activity: this.state.activity});
 
   };
+
   handleWhen = (e) => {
     this.setState({when: e.target.innerHTML})
-
   };
+
   closeSignUpModel = () => {
     window.$('#myModal-signup').modal('toggle');
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.loginInfo));
@@ -559,26 +572,23 @@ class App extends React.Component {
     }
   }
 
-
   showWebCam = () => {
     this.setState({showlogin: !this.state.showlogin});
   };
 
   hideWebcam = () => {
     this.setState({showlogin: false});
-
   };
-
 
   openSignUpModel = () => {
     window.analytics.page('Signup');
     this.setState({signUpPage: 0, error: '', success: ''});
 
   };
+
   openSignInModel = () => {
     window.analytics.page('Login');
     this.setState({error: '', success: ''});
-
   };
 
   render() {
@@ -589,58 +599,42 @@ class App extends React.Component {
     if (userInfo)
       this.props.history.push('/dashboard');
 
-
+    // Testing new version
     return (
       <div>
         <div>
-          <header className="nav-top">
-            <nav className="navbar navbar-expand-lg">
-              <a className="navbar-brand">
-                <img src={logoDummy} alt="logo"/>
-              </a>
+          <section>
+            <header className="nav-topMenu">
+              <nav className="navbar navbar-expand-lg">
+              <div class="square"></div> <span className="spanheadertxt">Motus</span>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"/>
               </button>
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ml-auto">
-                  <li className="nav-item active">
-                    <a className="nav-link" href="#" onClick={this.showWebCam}>Home</a>
-                  </li>
                   <li className="nav-item">
                     <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal">About</a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal-2">How It Works</a>
                   </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="#" onClick={this.showWebCam}>Live Session</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#">Become a Coach</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#">FAQ</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#">Contact</a>
-                  </li>
 
-                  {this.state.loginStatus ?
-
-                    <li className="nav-item" onClick={this.logOut}>
-                      <a className="nav-link disabled" href="#">Logout</a>
+                  {this.state.loginStatus ? 
+                    <li className="nav-item">
+                      <button type="button" onClick={this.logOut} className="nav-link disabled" class="explorebtn"><strong>Logout</strong></button>
                     </li>
                     :
                     <li className="nav-item">
-                      <a className="nav-link " href="#">Account</a>
+                      <button type="button" onClick={this.openSignInModel}  className="nav-link" class="explorebtn"><strong>SIGN IN</strong></button>
                     </li>
                   }
                 </ul>
               </div>
             </nav>
-          </header>
-
+            </header>
+          </section>
+          
           {/* The Modal SIGN UP MAIN  */}
           <div className="modal fade my-modal" id="myModal-signup">
             <div className="modal-dialog ">
@@ -739,8 +733,249 @@ class App extends React.Component {
               </div>
             </div>
           </div>
+          
+          <section className="bannerLanding">
+            <div class="container">
+              <div class="row">
+                <div class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                  <h2 class="section_title mt-0">Motus</h2>
+                  <br></br>
+                  <hr className="underliningMotus"></hr>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
 
-          <section className="banner">
+                  <div className="bannertxt">
+                    <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <button onClick={this.openSignUpModel} className="explorebtn">Explore</button>
+                  </div>
+                </div>
+                
+                <div className ="containeryogaImg" class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                  <img src={landingImgYogoForEveryone}/> 
+                  <div className="expYogatxt"><h2 class="mt-0">Experience Yoga</h2></div>
+                  <div className="yogardmtxt"><p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p></div>
+                </div> 
+              </div>
+            </div>
+          </section>
+          <hr class="divider my-4"></hr>
+          <section>
+              <div className="container">
+                <div class="row">
+                  <div class="col"><a className="nav-link" target="_blank" href="https://www.linkedin.com/"><img src={logoLinkedin}/></a></div>
+                  <div class="col"><a className="nav-link" target="_blank" href="https://www.facebook.com"><img src={logoFacebook}/></a></div>
+                  <div class="col"><a className="nav-link" target="_blank" href="https://www.instagram.com"><img src={logoInstagram}/></a></div>
+                  <div class="col"><a className="nav-link" target="_blank" href="https://www.twitter.com"><img src={logoTwitter}/></a></div>
+                </div>
+              </div>
+              <hr class="divider my-4"></hr>
+          </section>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <section className="yoga">
+            <div class="container">
+              <div class="row">
+                <div class="col-8 ml-auto text-left mb-5 mb-lg-0">
+                  <img src={landingImgYoga}/>       
+                </div>
+                <div class="col-4 ml-auto text-left mb-5 mb-lg-0">
+                  <h2 class="section_title mt-0">Yoga</h2>
+                  <br></br>
+                  <br></br>
+
+                  <div><p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p></div>
+                  <button onClick={this.openSignUpModel} class="explorebtn">Explore</button>
+                  <hr class="divider my-4"></hr>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <section className="livefeedback">
+            <div class="container">
+              <div class="row">
+                <div class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                  <h2 class="section_title mt-0">Live</h2><br></br>
+                  <h2 class="section_title mt-0">Feedback</h2>
+                  <br></br>
+                  <br></br>
+                  <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                  <button onClick={this.openSignUpModel} class="explorebtn">Explore</button>
+                  <hr class="livefeedbackline"></hr>
+                </div>
+                <div class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                  <img src={landingImgFlex}/>       
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <section className="instructors"> 
+            <div class="container">
+              <div class="row">
+                <div class="col-7 ml-auto text-left mb-5 mb-lg-0">
+                  <img src={landingImgSquat}/>       
+                </div>
+                <div class="col-5 ml-auto text-left mb-5 mb-lg-0">
+                  <h2 class="section_title">Instructors</h2>
+                  <br></br>
+                  <br></br>
+                  <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                  <button onClick={this.openSignUpModel} class="explorebtn">Explore</button>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <div class="row">
+                    <div class="col-7 ml-auto">
+                      <img src={landingImgWorkouts}/> 
+                      <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                    </div>
+                    <div class="col-5 ml-auto text-left mb-5 mb-lg-0">
+                      <img src={landingImgGymInstructor}/>    
+                      <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <section className="sessions">
+            <div class="container">
+              <div class="row">
+                <div class="col-6">
+                  <h2 class="section_title mt-0">Sessions</h2>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+
+                  <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                  <button onClick={this.openSignUpModel} class="explorebtn">Explore</button>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                </div>
+                <div class="col-6 ml-auto text-center mb-5 mb-lg-0">
+                  <img src={landingImgYogoForEveryone}/>       
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="row">
+              <div class="col-lg-2">
+                <hr class="sessionline"></hr>
+              </div>
+          </div>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <section class="page-footer">
+            <footer>
+              <div class="container-fluid text-center text-md-left">
+                <div class="row">
+                  <div class="col-md-4 mt-md-0 mt-3">
+                    <h3 class="section_title_footer">Motus</h3>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                  </div>
+                  <hr class="clearfix w-100 d-md-none pb-3"></hr>
+                  <div class="col-md-2 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Company</h5>
+                    <ul class="list-unstyled">
+                      <li>
+                        <a>About</a>
+                      </li>
+                      <li>
+                        <a>Technology</a>
+                      </li>
+                      <li>
+                        <a>Careers</a>
+                      </li>
+                      <li>
+                        <a>Partners</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Subscription</h5>
+                    <ul class="list-unstyled">
+                      <li>
+                        <a>Pricing </a>
+                      </li>
+                      <li>
+                        <a>Activities</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Support</h5>
+                    <ul class="list-unstyled">
+                      <li>
+                        <a>FAQ</a>
+                      </li>
+                      <li>
+                        <a>Help</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Contacts</h5>
+                    <ul class="list-unstyled">
+                      <li>
+                        <a>blabla@blabla.com</a>
+                      </li>
+                      <li>
+                        <a>Facebook</a>
+                      </li>
+                      <li>
+                        <a>LinkedIn</a>
+                      </li>
+                      <li>
+                        <a>Instagram</a>
+                      </li>
+                      <li>
+                        <a>Twitter</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </section>
+
+          {/* <section className="banner">
             <img src={logobg}/>
             <div className="overlay-wrap">
               <div className="row">
@@ -781,13 +1016,12 @@ class App extends React.Component {
                 </ul>
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
-    );
+    ); 
+    // Testing new Version
   }
-
-
 }
 
 export default App;
