@@ -137,7 +137,7 @@ class App extends React.Component {
                 <div className="col-6 col-sm-6 containeryogaImg">
                   <img style={{width: '668px'}} src={landingImgYogoForEveryone}/>
                   <div className="expYogatxt"><h2 className="mt-0">Experience Yoga</h2></div>
-                  <div className="yogardmtxt"><p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur
+                  <div className="yogardmtxt"><p className="text-white mb-5">"Lorem ipsum dolor sit amet, consectetur <br/>
                     adipiscing elit, sed"</p></div>
                   <br></br>
                   <br></br>
