@@ -20,7 +20,12 @@ class Dashboard extends Component {
       stats: {},
       instructorList: [],
       errMsg: 'Loading...please be patient...'
-    }
+    };
+    const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY);
+    console.log(userInfo);
+    const isUserLogIn = !!userInfo;
+    if (!userInfo)
+      this.props.history.push('/login');
   }
 
   getSessions = () => {
@@ -88,15 +93,6 @@ class Dashboard extends Component {
     }
   }
 
-  handelLogout = () => {
-    // this.props.onLogOut();
-    console.log('logging out ??');
-    localStorage.setItem(LOCAL_STORAGE_KEY, '');
-    this.setState({loginInfo: ''});
-    this.setState({loginStatus: false});
-    this.props.history.push('/');
-
-  };
   goLive = () => {
     this.props.history.push('/live');
 
@@ -152,7 +148,8 @@ class Dashboard extends Component {
                         <div className="parallex"
                              style={{background: 'rgba(255, 0, 213, 0.5)'}}> {o.instructor_username}   </div>
                         <div className="parallex-bottom"
-                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Michael teaches you the basics of Yoga   </div>
+                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Michael teaches you the basics of Yoga
+                        </div>
                       </div>
                       <div className="row">
                         <div className="col">
@@ -239,7 +236,8 @@ class Dashboard extends Component {
                         <div className="parallex"
                              style={{background: 'rgba(56, 44, 251, 0.5)'}}> {o.first_name + ' ' + o.last_name}   </div>
                         <div className="parallex-bottom"
-                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Learn Bikram with Michael   </div>
+                             style={{background: 'rgba(0, 0, 0, 0.5)'}}> Learn Bikram with Michael
+                        </div>
                       </div>
                       <div className="row">
                         <div className="col">

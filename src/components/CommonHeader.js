@@ -40,7 +40,7 @@ class CommonHeader extends Component {
     localStorage.setItem(LOCAL_STORAGE_KEY, '');
     this.setState({loginInfo: ''});
     this.setState({loginStatus: false});
-    this.props.history.push('/');
+    this.props.history.push('/login');
 
   };
   change = (event) => {

@@ -35,9 +35,9 @@ function PrivateRoute({component: Component, ...rest}) {
 
 const routing = (
   <Router>
-    <Route path='/' exact component={OnBoarding}/>
-    <Route path='/login' exact component={OnBoarding}/>
-    {/*<Route path='/onboard' component={OnBoarding}/>*/}
+    <Route path='/' exact component={Dashboard}/>
+    <Route path='/login' exact component={App}/>
+    <Route path='/onboard' component={OnBoarding}/>
     <PrivateRoute path='/dashboard' component={Dashboard}/>
     <PrivateRoute path='/live' component={LiveYoga}/>
     <PrivateRoute path='/rewards' component={Rewards}/>

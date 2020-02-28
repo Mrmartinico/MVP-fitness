@@ -12,6 +12,7 @@
     "compute-cosine-similarity": "^1.0.0",
     "compute-l2norm": "^1.1.0",
     "jquery": "^3.4.1",
+    "lottie-web": "^5.6.5",
     "mdbreact": "^4.25.2",
     "ml5": "^0.3.1",
     "node-sass": "^4.13.1",

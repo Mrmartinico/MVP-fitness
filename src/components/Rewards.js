@@ -21,6 +21,11 @@ class Rewards extends Component {
       instructorList2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12],
       errMsg: 'Loading...please be patient...'
     }
+    const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY);
+    console.log(userInfo);
+    const isUserLogIn = !!userInfo;
+    if (!userInfo)
+      this.props.history.push('/login');
   }
 
   getSessions = () => {
