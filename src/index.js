@@ -23,7 +23,7 @@ function PrivateRoute({component: Component, ...rest}) {
       {...rest}
       render={
         (props) => {
-          console.log(localStorage.getItem(LOCAL_STORAGE_KEY));
+          console.log('>>> in route',localStorage.getItem(LOCAL_STORAGE_KEY));
           return localStorage.getItem(LOCAL_STORAGE_KEY) !== ''
             ? <Component {...props} />
             : <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
@@ -35,7 +35,7 @@ function PrivateRoute({component: Component, ...rest}) {
 
 const routing = (
   <Router>
-    <Route path='/' exact component={Dashboard}/>
+    <Route path='/' render={() => (<Redirect to="/dashboard" />)} />
     <Route path='/login' exact component={App}/>
     <Route path='/onboard' component={OnBoarding}/>
     <PrivateRoute path='/dashboard' component={Dashboard}/>
