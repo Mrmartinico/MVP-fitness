@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import avatar_img from '../assests/profile_img.png';
-import logoicon from '../assests/logo-1.jpg';
 import {LOCAL_STORAGE_KEY} from "../common/urlconstants";
+import logoicon from '../assests/shadow_logo.png';
 
 
 class CommonHeader extends Component {

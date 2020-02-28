@@ -117,11 +117,11 @@ class Dashboard extends Component {
               <div id="header">
                 <div className="row">
                   <div className="col-md-7">
-                    <h2 className="white">Morning Yoga <br/>
+                    <h2 className="text-white">Morning Yoga <br/>
                       to start your day</h2>
                     <div className="m-0">
                       <img className="img-user" style={{height: '50px', width: '50px'}} src={instrDefaultImg}/>
-                      <b className="white" style={{paddingLeft: '10px'}}>With Micheal</b>
+                      <b className="text-white" style={{paddingLeft: '10px'}}>With Micheal</b>
                     </div>
                     <h6 className="gray-d">Start you day with a great yoga class.
                       This activity will be beneficial for your body

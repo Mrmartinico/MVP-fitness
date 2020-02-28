@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 
 import logobg from './assests/Home-bg.jpg';
 import logoDummy from './assests/logo.png';
@@ -305,9 +305,7 @@ class App extends React.Component {
   closeSignUpModel = () => {
     window.$('#myModal-signup').modal('toggle');
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.state.loginInfo));
-
     this.props.history.push('/dashboard');
-
   };
 
   renderForms() {
@@ -423,7 +421,7 @@ class App extends React.Component {
                           onClick={this.handleGender.bind(null, {id: 'M'})}>Male
                   </button>
                   <button type="button" className={this.state.gender === 'F' ? active : inActive}
-                          onClick={this.handleGender.bind(null, {id: 'F'})}>Female
+                          onClick={this.handleGender.bind(null, {id: 'M'})}>Female
                   </button>
                   <button type="button" className={this.state.gender === 'NON-B' ? active : inActive}
                           onClick={this.handleGender.bind(null, {id: 'NON-B'})}>Non-binary

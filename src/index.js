@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
 import './index.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 import * as serviceWorker from './serviceWorker';
 import "video-react/dist/video-react.css";
@@ -9,6 +13,7 @@ import {LOCAL_STORAGE_KEY} from "./common/urlconstants";
 import Dashboard from './components/Dashboard';
 import LiveYoga from "./components/LiveYoga";
 import Rewards from "./components/Rewards";
+import OnBoarding from "./components/OnBoarding";
 import App from './App';
 
 
@@ -30,8 +35,9 @@ function PrivateRoute({component: Component, ...rest}) {
 
 const routing = (
   <Router>
-    <Route path='/' exact component={App}/>
-    <Route path='/login' exact component={App}/>
+    <Route path='/' exact component={OnBoarding}/>
+    <Route path='/login' exact component={OnBoarding}/>
+    {/*<Route path='/onboard' component={OnBoarding}/>*/}
     <PrivateRoute path='/dashboard' component={Dashboard}/>
     <PrivateRoute path='/live' component={LiveYoga}/>
     <PrivateRoute path='/rewards' component={Rewards}/>
