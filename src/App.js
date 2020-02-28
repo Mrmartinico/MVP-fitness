@@ -7,8 +7,9 @@ import landingImgYoga from './assests/yoga-for-strength-jumbo.jpg';
 import landingImgFlex from './assests/yogaflex.jpg';
 import landingImgSquat from './assests/air-squat-josh-bridges1.jpg';
 import landingImgWorkouts from './assests/best-pilates-youtube-workouts-2__medium_4x3.jpg';
+import landingImgBigWorkouts from './assests/best-pilates-youtube-workouts-2__big_4x3.jpg';
 import landingImgGymInstructor from './assests/Gym-Instructor.jpg';
-import landingImgYogoForEveryone from './assests/yoga-for-everyone_promo-superJumbo.jpg';
+import landingImgYogoForEveryone from './assests/yoga-for-everyone_promo-superJumbo_bis.jpg';
 
 import logoLinkedin from './assests/1024px-LinkedIn_Logo 1.jpg';
 import logoFacebook from './assests/facebook_logos_PNG19749 1.jpg';
@@ -631,7 +632,7 @@ class App extends React.Component {
                     <a className="nav-link" href="#" data-toggle="modal" data-target="#myModal-2">How It Works</a>
                   </li>
 
-                  {this.state.loginStatus ? 
+                  {this.state.loginStatus ?
                     <li className="nav-item">
                       <button type="button" onClick={this.logOut} className="nav-link disabled" class="explorebtn"><strong>Logout</strong></button>
                     </li>
@@ -645,7 +646,7 @@ class App extends React.Component {
             </nav>
             </header>
           </section>
-          
+
           {/* The Modal SIGN UP MAIN  */}
           <div className="modal fade my-modal" id="myModal-signup">
             <div className="modal-dialog ">
@@ -744,11 +745,11 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-          
+
           <section className="bannerLanding">
             <div class="container">
               <div class="row">
-                <div className ="containeryogaImg" class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                <div class="col-sm-6">
                   <h2 class="section_title mt-0">Motus</h2>
                   <br></br>
                   <hr className="underliningMotus"></hr>
@@ -771,20 +772,20 @@ class App extends React.Component {
                     <div className="animBox" ref={ ref => this.animBox = ref}></div>
                   </div>
                 </div>
-                
-                <div className ="containeryogaImg" class="col-6 ml-auto text-left mb-5 mb-lg-0">
-                  <img src={landingImgYogoForEveryone}/> 
+
+                <div class="col-sm-6 containeryogaImg">
+                  <img src={landingImgYogoForEveryone}/>
                   <div className="expYogatxt"><h2 class="mt-0">Experience Yoga</h2></div>
                   <div className="yogardmtxt"><p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p></div>
                   <br></br>
                   <br></br>
                   <button className="expYogabtn" onClick={this.openSignUpModel}>Start your first session</button>
-                </div> 
+                </div>
               </div>
             </div>
           </section>
-          <hr class="divider my-4"></hr>
-          <section>
+          <section className="socialsec">
+            <br></br>
               <div className="container">
                 <div class="row">
                   <div class="col"><a className="nav-link" target="_blank" href="https://www.linkedin.com/"><img src={logoLinkedin}/></a></div>
@@ -793,9 +794,8 @@ class App extends React.Component {
                   <div class="col"><a className="nav-link" target="_blank" href="https://www.twitter.com"><img src={logoTwitter}/></a></div>
                 </div>
               </div>
-              <hr class="divider my-4"></hr>
+            <br></br>
           </section>
-
           <br></br>
           <br></br>
           <br></br>
@@ -805,10 +805,10 @@ class App extends React.Component {
           <section className="yoga">
             <div class="container">
               <div class="row">
-                <div class="col-8 ml-auto text-left mb-5 mb-lg-0">
-                  <img src={landingImgYoga}/>       
+                <div class="col-sm-6">
+                  <img src={landingImgYoga}/>
                 </div>
-                <div class="col-4 ml-auto text-left mb-5 mb-lg-0">
+                <div class="col-sm-6 text-left">
                   <h2 class="section_title mt-0">Yoga</h2>
                   <br></br>
                   <br></br>
@@ -830,17 +830,16 @@ class App extends React.Component {
           <section className="livefeedback">
             <div class="container">
               <div class="row">
-                <div class="col-6 ml-auto text-left mb-5 mb-lg-0">
+                <div class="col-sm-6 livefeedbackline">
                   <h2 class="section_title mt-0">Live</h2><br></br>
                   <h2 class="section_title mt-0">Feedback</h2>
                   <br></br>
                   <br></br>
                   <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
                   <button onClick={this.openSignUpModel} class="explorebtn">Explore</button>
-                  <hr class="livefeedbackline"></hr>
                 </div>
                 <div class="col-6 ml-auto text-left mb-5 mb-lg-0">
-                  <img src={landingImgFlex}/>       
+                  <img src={landingImgFlex}/>
                 </div>
               </div>
             </div>
@@ -852,13 +851,13 @@ class App extends React.Component {
           <br></br>
           <br></br>
 
-          <section className="instructors"> 
+          <section className="instructors">
             <div class="container">
               <div class="row">
-                <div class="col-7 ml-auto text-left mb-5 mb-lg-0">
-                  <img src={landingImgSquat}/>       
+                <div class="col-sm-6">
+                  <img src={landingImgSquat}/>
                 </div>
-                <div class="col-5 ml-auto text-left mb-5 mb-lg-0">
+                <div class="col-sm-6">
                   <h2 class="section_title">Instructors</h2>
                   <br></br>
                   <br></br>
@@ -869,11 +868,11 @@ class App extends React.Component {
                   <br></br>
                   <div class="row">
                     <div class="col-7 ml-auto">
-                      <img src={landingImgWorkouts}/> 
+                      <img src={landingImgWorkouts}/>
                       <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
                     </div>
                     <div class="col-5 ml-auto text-left mb-5 mb-lg-0">
-                      <img src={landingImgGymInstructor}/>    
+                      <img src={landingImgGymInstructor}/>
                       <p class="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
                     </div>
                   </div>
@@ -904,16 +903,11 @@ class App extends React.Component {
                   <br></br>
                 </div>
                 <div class="col-6 ml-auto text-center mb-5 mb-lg-0">
-                  <img src={landingImgYogoForEveryone}/>       
+                  <img src={landingImgBigWorkouts}/>
                 </div>
               </div>
             </div>
           </section>
-          <div class="row">
-              <div class="col-lg-2">
-                <hr class="sessionline"></hr>
-              </div>
-          </div>
 
           <br></br>
           <br></br>
@@ -923,9 +917,9 @@ class App extends React.Component {
 
           <section class="page-footer">
             <footer>
-              <div class="container-fluid text-center text-md-left">
-                <div class="row">
-                  <div class="col-md-4 mt-md-0 mt-3">
+              <div class="container text-center text-md-left">
+                <div class="row text-center text-md-left mt-3 pb-3">
+                  <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h3 class="section_title_footer">Motus</h3>
                     <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
                   </div>
@@ -993,52 +987,9 @@ class App extends React.Component {
               </div>
             </footer>
           </section>
-
-          {/* <section className="banner">
-            <img src={logobg}/>
-            <div className="overlay-wrap">
-              <div className="row">
-                <div className="col-6 offset-5">
-                  <h1>When AI<br/>Meets<br/>Fitness</h1>
-                  {this.state.loginStatus === false ?
-                    <div>
-                      <button type="button" className="btn global-btn mr-10" data-toggle="modal"
-                              onClick={this.openSignUpModel} data-target="#myModal-signup" data-backdrop="static"
-                              data-keyboard="false">Sign Up
-                      </button>
-                      < button type="button" onClick={this.openSignInModel} className="btn global-btn borderd"
-                               data-toggle="modal"
-                               data-target="#myModal-signin" data-backdrop="static" data-keyboard="false">Sign In
-                      </button>
-                    </div>
-                    :
-                    <div>
-                      <h3>Welcome {this.state.loginInfo.full_name}</h3>
-                    </div>
-                  }
-                </div>
-              </div>
-              <div className="social-media">
-                <ul>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-facebook-square"/></a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-instagram"/></a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-twitter"/></a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link disabled" href="#"><i className="fa fa-youtube"/></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section> */}
         </div>
       </div>
-    ); 
+    );
     // Testing new Version
   }
 }

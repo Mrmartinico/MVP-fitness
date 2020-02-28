@@ -878,13 +878,14 @@ button.explorebtn{
     line-height: 42px;
   }
   
-  hr.livefeedbackline{
-    width: 589px;
-    height: 3px;
-    left: 150px;
-    top: 1998px;
-    background: #000000;
+  div.livefeedbackline, .sessions{
+    border-bottom: 3px solid #000000;
   }
+
+  .socialsec{
+    border-bottom: 0.5px solid #E8E8E8;
+  }
+
   .underliningMotus{
     width: 110px;
     height: 3px;
@@ -906,9 +907,11 @@ button.explorebtn{
     top: 3503px;
     background: #382CFB;
     color: white;
+    padding-top: 4rem;
   }
   section.bannerLanding{
     margin-top: 105px;
+    border-bottom: 0.5px solid #E8E8E8;
   }
   header.nav-topMenu{
     margin-top: 32px;
@@ -952,9 +955,10 @@ button.explorebtn{
     line-height: 16px;
     color: #707070;
   }
-  .containeryogaImg{
+  div.containeryogaImg{
     position: relative;
-    text-align: center;
+    width: 719px;
+    height: 705px;
   }
   .yogardmtxt{
     position: absolute;
@@ -965,7 +969,7 @@ button.explorebtn{
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
-    color: #3E3E3E;
+    color: white;
   }
   .expYogatxt{
     position: absolute;
@@ -976,13 +980,18 @@ button.explorebtn{
     font-weight: 900;
     font-size: 36px;
     line-height: 42px;
-    color: #000000;
+    color: white;
   }
   .animBox{
     width: 61px;
     height: 45px;
     top: 660px;
-    float: right;   
+    float: right;
+  }
+  hr.divider{
+    width: 521px;
+    height: 3px;
+    background: #000000;
   }
   .expYogabtn{
     position: absolute;
