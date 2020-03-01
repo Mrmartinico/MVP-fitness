@@ -304,8 +304,8 @@ class LiveYoga extends Component {
     let poseAverage = 0;
     let sessionAverage = 0;
 
-    // TODO: Fire real event
-    await this.fireSessionStartedEvent();
+    // TODO: Fire real event, add params
+    await this.fireSessionStartedEvent({});
 
     this.changePose(this.routine[this.currentPose]);
 
@@ -348,7 +348,8 @@ class LiveYoga extends Component {
 
           // TODO: Fire real event
           await this.firePoseCompletedEvent({
-            averageAccuracy: poseAverage * 100
+            averageAccuracy: poseAverage * 100,
+            poseId: this.routine[this.currentPose].id
           });
           poseAverage = 0; // init
 
