@@ -38,8 +38,8 @@ const routing = (
     <Route path='/' render={() => (<Redirect to="/dashboard" />)} />
     <Route path='/login' exact component={App}/>
     <Route path='/onboard' component={OnBoarding}/>
-    <PrivateRoute path='/dashboard' component={Dashboard}/>
-    <PrivateRoute path='/live' component={LiveYoga}/>
+    <Route path='/dashboard' component={Dashboard}/>
+    <Route path='/live' component={LiveYoga}/>
     <PrivateRoute path='/rewards' component={Rewards}/>
   </Router>
 );

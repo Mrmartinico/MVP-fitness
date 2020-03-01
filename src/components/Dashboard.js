@@ -21,11 +21,11 @@ class Dashboard extends Component {
       instructorList: [],
       errMsg: 'Loading...please be patient...'
     };
-    const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY);
-    console.log(userInfo);
-    const isUserLogIn = !!userInfo;
-    if (!userInfo)
-      this.props.history.push('/login');
+    // const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY);
+    // console.log(userInfo);
+    // const isUserLogIn = !!userInfo;
+    // if (!userInfo)
+    //   this.props.history.push('/login');
   }
 
   getSessions = () => {
