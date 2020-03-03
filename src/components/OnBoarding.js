@@ -430,6 +430,7 @@ class OnBoarding extends Component {
                         <span className="mr-2 ml-2"></span>
                         <FacebookLogin
                           appId="402726783740842"
+                          fields="name,email,picture"
                           callback={this.responseFace}
                           render={renderProps => (
                             <img onClick={renderProps.onClick} src={facebook_img}/>

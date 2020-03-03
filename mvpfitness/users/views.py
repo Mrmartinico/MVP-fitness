@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from django.utils import timezone
-from .models import User, Tier, Address, SocialMedia
+from .models import User, Tier, Address, SocialMedia, MyUserManager
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import check_password
@@ -19,7 +19,7 @@ class CreateUser(APIView):
         user_status = {'status': "User Email Already exists"}
         if body['user_type'] == "user" and not User.objects.filter(email=body['email']).exists():
             user_status['status'] = "User Created Successfully"
-            user = User.create_user(self, first_name=body['first_name'], last_name=body['last_name'],
+            user = MyUserManager.create_user(self, first_name=body['first_name'], last_name=body['last_name'],
                                     username=body['user_name'],
                                     email=body['email'], password=body['password'], user_type=body['user_type'],
                                     timezone=body['timezone'], created_at=datetime.now(tz=timezone.utc),
