@@ -210,13 +210,12 @@ class OnBoarding extends Component {
         weight: selectedWeight
       }, () => {
         console.log(this.state);
+        if (!selectedActivities) {
+          this.setState({error: 'Please select at least 1 activity'});
+          return false;
+        }
+        this.register();
       });
-
-      if (!selectedActivities) {
-        this.setState({error: 'Please select at least 1 activity'});
-        return false;
-      }
-      this.register();
 
     } else
       this.setState({page: this.state.page + 1})
@@ -329,8 +328,9 @@ class OnBoarding extends Component {
       const date = new Date(this.state.dob);
       let month = (date.getMonth() + 1);
       month = month < 10 ? '0' + month : month;
-      var day = date.getDate();
-      var year = date.getFullYear();
+      let day = date.getDate();
+      day = day < 10 ? '0' + day : day;
+      let year = date.getFullYear();
       dob = `${day}-${month}-${year}`
     }
     console.log(dob);
