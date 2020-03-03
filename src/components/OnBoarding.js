@@ -228,18 +228,26 @@ class OnBoarding extends Component {
   responseFace = (res) => {
     console.log('facebook response !!!', res);
     // response.authResponse.userID
-    if (res && res.googleId) {
+    // name: "Zed Hunter"
+    // id: "1075034636211012"
+    // accessToken: "EAAFuRyLi66oBAPD9iwG4rnepYVh2fI7cQdv3yTScr4pY8BMrMJGL0HHkKk5lPZAeB8oRnoO2JEiYII1xnuemhj8ZBtdtjnk8H2yWyb2fGardMgWwzgBZBwXQwlRV1dwNXgmzf9LRv4PuMjZCzxUefzcZBydK6BQIpQi82q76NwO8p6L7hIwSIfinCVfBeBJaqP67iCpHK4wZDZD"
+    // userID: "1075034636211012"
+    // expiresIn: 5339
+    // signedRequest: "jnjS6zLCYjymgaErr0Q3nyCm0WgP_Fs9X-N_pWiK6zk.eyJ1c2VyX2lkIjoiMTA3NTAzNDYzNjIxMTAxMiIsImNvZGUiOiJBUUJ4bmY2VnJVb1JFSk9oczRPd0doc2g2MFNpUm5KdzZUb3djMGFpQl85bmttcWItRUtrRDVPangza0gzejVJdGJZdXBrUXQxb2NTYVhRY0l0QkJqdHdPUjFBRUlBTFc2MUlKR3M5cVM4c0dpOEtCRUtndXpjVUFkUkgtRUpUV3NBVHMtRTFDRVpWT21MVHc3ZEgxdTR1YVBKRVM1SW1SNnBieHZ3RWlKZi1oTjdnMS1xc1p4d0lYN09Ba0dRSXpMeHNlQXhodkluaTRqQ0I4U1JfcnZXN1BkT01CcUJZQm9UWUQ4LURqaUkwU1VDVXJ6d1c0RVRPOS1GamRsVmhqblVRcmQ2MFhCVGZDcjlqcWd2R0tPbV9hRDdaV0lIcXFrMDZNVDRCclYtY0ZLUzEyaWZXUWNSX0FmZUZOT3QtNlV4aU4tdWlVc3VRakplYlZQNThHLTk1eSIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwiaXNzdWVkX2F0IjoxNTgzMjM4NjYxfQ"
+    // graphDomain: "facebook"
+    // data_access_expiration_time: 1591014661
+    if (res && res.userID) {
       this.loading(true);
-      this.setState({email: res.profileObj.email, fName: res.profileObj.name});
+      this.setState({email: res.email, fName: res.name});
       fetch(LOGIN_URL, {
         method: 'POST',
         body: JSON.stringify({
-          "username": res.profileObj.email,
-          'full_name': res.profileObj.name,
+          "username": res.email,
+          'full_name': res.name,
           "login_type": "social_media",
           "user_type": "user",
-          "social_media_type": "Google",
-          "social_media_id": res.googleId
+          "social_media_type": "Facebook",
+          "social_media_id": res.userID
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -316,6 +324,16 @@ class OnBoarding extends Component {
     this.setState({error: ''});
     console.log(this.state);
     this.loading(true);
+    let dob = '';
+    if (this.state.dob) {
+      const date = new Date(this.state.dob);
+      let month = (date.getMonth() + 1);
+      month = month < 10 ? '0' + month : month;
+      var day = date.getDate();
+      var year = date.getFullYear();
+      dob = `${day}-${month}-${year}`
+    }
+    console.log(dob);
     fetch(SIGN_UP_URL, {
       method: 'POST',
       body: JSON.stringify(
@@ -326,7 +344,7 @@ class OnBoarding extends Component {
           "last_name": "",
           "user_type": "user",
           "timezone": "",
-          "dob": this.state.dob,
+          "dob": dob, // DD-MM-YYYY
           "email": this.state.email,
           "password": this.state.pwd,
           "re_password": this.state.cPwd,
@@ -420,7 +438,7 @@ class OnBoarding extends Component {
                         <GoogleLogin
                           clientId="471679444708-h8k7t7r9v876gbbea7tsh7s38pkdrlvm.apps.googleusercontent.com"
                           render={renderProps => (
-                            <img src={google_img} onClick={renderProps.onClick} disabled={renderProps.disabled}/>
+                            <img src={google_img} alt="" onClick={renderProps.onClick} disabled={renderProps.disabled}/>
 
                           )}
                           onSuccess={this.responseGoogleLogin}
@@ -430,9 +448,10 @@ class OnBoarding extends Component {
                         <span className="mr-2 ml-2"></span>
                         <FacebookLogin
                           appId="402726783740842"
+                          fields="name,email,picture"
                           callback={this.responseFace}
                           render={renderProps => (
-                            <img onClick={renderProps.onClick} src={facebook_img}/>
+                            <img onClick={renderProps.onClick} alt="" src={facebook_img}/>
                           )}
                         />
                       </div>
