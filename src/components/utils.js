@@ -88,9 +88,16 @@ export function drawSkeleton(
 
 export function segmentIdentity(user) {
   console.log('ANALYTICS', user);
-  window.analytics.identify(user.id, {
-    name: user.full_name,
-    email: user.email,
-    user_type: user.user_type
-  });
+  if (!user || !user.id) {
+    window.analytics.identify('0', {
+      name: 'anonymous',
+      email: 'anonymous@anonymous.com',
+    });
+  } else {
+    window.analytics.identify(user.id, {
+      name: user.full_name,
+      email: user.email,
+      user_type: user.user_type
+    });
+  }
 }
