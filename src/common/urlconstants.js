@@ -1,4 +1,4 @@
-const BASE_URL = 'https://smarthomeupdates.org/';
+const BASE_URL = 'https://motus.fit/';
 export const LOCAL_STORAGE_KEY = '__pref__fitness';
 export const getSessionURL = (email) => `${BASE_URL}session/get-session?u_name=${email}`;
 export const getHomeStatsURL = (email) => `${BASE_URL}session/get-home-statistics?u_name=${email}`;
