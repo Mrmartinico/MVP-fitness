@@ -86,7 +86,6 @@ class MyUserManager(BaseUserManager):
                     date_of_birth, gender, account_status, height, weight, telephone, profile_image, fitness_types,
                     is_staff, is_superuser):
         print("Normal user")
-        import pdb;pdb.set_trace()
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -94,7 +93,7 @@ class MyUserManager(BaseUserManager):
                     email=email, password=password, user_type=user_type,
                     timezone=timezone, created_at=created_at, date_of_birth=date_of_birth,
                     gender=gender, account_status=account_status, height=height, weight=weight,
-                    telephone=telephone, profile_image=profile_image)
+                    telephone=telephone, profile_image=profile_image, is_staff=is_staff, is_admin=is_superuser)
         user.username = username
         user.set_password(password)
         user.save()
