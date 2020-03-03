@@ -28,7 +28,7 @@ class CreateUser(APIView):
                                     gender=body['gender'], account_status=True, height=body['height'],
                                     weight=body['weight'],
                                     telephone=body['telephone'], profile_image='', fitness_types=body['activities'],
-                                    staff=True, is_admin=False)
+                                    is_staff=True, is_superuser=False)
             address = Address(street_name=body['street'], country=body['country'], state=body['state'],
                               city=body['city'], zip_code=body['zip_code'], user_id=user)
             address.save()

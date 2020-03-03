@@ -93,7 +93,8 @@ class MyUserManager(BaseUserManager):
                     email=email, password=password, user_type=user_type,
                     timezone=timezone, created_at=created_at, date_of_birth=date_of_birth,
                     gender=gender, account_status=account_status, height=height, weight=weight,
-                    telephone=telephone, profile_image=profile_image, is_staff=is_staff, is_admin=is_superuser)
+                    telephone=telephone, profile_image=profile_image, is_staff=is_staff, is_superuser=is_superuser,
+                    is_admin=False)
         user.username = username
         user.set_password(password)
         user.save()
@@ -108,7 +109,6 @@ class MyUserManager(BaseUserManager):
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
-        import pdb;pdb.set_trace()
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         user = self.create_user(
