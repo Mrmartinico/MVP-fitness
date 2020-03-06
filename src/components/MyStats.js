@@ -153,24 +153,28 @@ class MyStats extends Component {
                 <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <h4>Leaderboard</h4>
                     <br></br>
-                    <div>
-                        <BootstrapTable tableHeaderClass={"col-hidden"} bordered={ false } data={panelBarData}>
-                        <TableHeaderColumn dataField='rankPic' dataFormat={this.imageFormatterRankPicture}>
-                        </TableHeaderColumn>
-                        <TableHeaderColumn dataField='profilePic' dataFormat={this.imageFormatterProfilePicture}>
-                        </TableHeaderColumn>
-                        <TableHeaderColumn  isKey dataField='name' dataFormat={this.userNameFormatter}>
-                        </TableHeaderColumn>
-                        <TableHeaderColumn dataField='rank' dataFormat={this.RankFormatter}>
-                        </TableHeaderColumn>
-                        </BootstrapTable>
-                    </div>
-
-                    <div className="row" style={{height: '30px'}}></div>
-                    < div className="text-center mt-1">
-                        <Button style={{width: '82px', height: '21px', borderRadius: '20px',
-                         background: '#FFFFFF', border: '1px solid #FFFFFF', boxSizing: 'border-box'}} className="com-button">View all</Button>
-                    </div>
+                    {(this.state.stats && this.state.stats.rewards && this.state.stats.rewards.sessions_completed) ?
+                        <div>
+                            <div>
+                                <BootstrapTable tableHeaderClass={"col-hidden"} bordered={ false } data={panelBarData}>
+                                <TableHeaderColumn dataField='rankPic' dataFormat={this.imageFormatterRankPicture}>
+                                </TableHeaderColumn>
+                                <TableHeaderColumn dataField='profilePic' dataFormat={this.imageFormatterProfilePicture}>
+                                </TableHeaderColumn>
+                                <TableHeaderColumn  isKey dataField='name' dataFormat={this.userNameFormatter}>
+                                </TableHeaderColumn>
+                                <TableHeaderColumn dataField='rank' dataFormat={this.RankFormatter}>
+                                </TableHeaderColumn>
+                                </BootstrapTable>
+                            </div>
+                            <div className="row" style={{height: '30px'}}></div>
+                            < div className="text-center mt-1">
+                                <Button style={{width: '82px', height: '21px', borderRadius: '20px',
+                                background: '#FFFFFF', border: '1px solid #FFFFFF', boxSizing: 'border-box'}} className="com-button">View all</Button>
+                            </div>
+                        </div>
+                    : 
+                    <p>No information available </p>}
                 </div>
                 <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
                     <div className="row">
@@ -251,7 +255,11 @@ class MyStats extends Component {
                         </div>
                     </div>
                 </div> 
-                : <p>No information available </p>}
+                : 
+                    <div className="row" style={{height: '475px'}}>
+                        <p>No information available </p>
+                    </div>
+                }
                 </div>
             </div>
             </div>
