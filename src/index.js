@@ -14,6 +14,7 @@ import Dashboard from './components/Dashboard';
 import LiveYoga from "./components/LiveYoga";
 import Rewards from "./components/Rewards";
 import OnBoarding from "./components/OnBoarding";
+import MyStats from "./components/MyStats";
 import App from './App';
 
 
@@ -41,6 +42,7 @@ const routing = (
     <PrivateRoute path='/dashboard' component={Dashboard}/>
     <PrivateRoute path='/live' component={LiveYoga}/>
     <PrivateRoute path='/rewards' component={Rewards}/>
+    <PrivateRoute path='/mystats' component={MyStats}/>
   </Router>
 );
 
