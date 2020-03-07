@@ -21,7 +21,6 @@ class MyStats extends Component {
   static defaultProps = {
     loadingText: 'Loading...please be patient...'
   };
-  stats = ["X-Small", "Small", "Medium"];
 
   constructor(props) {
     super(props)
@@ -175,40 +174,28 @@ class MyStats extends Component {
                       </div>
                     </div>
                   </div>
-                  {this.state.stats && this.state.stats.rewards && this.state.stats.rewards.sessions_completed ?
+                  {(this.state.stats && this.state.stats.rewards && this.state.stats.rewards.sessions_completed) ?
                     <div>
                       <div className="row" style={{height: '80px'}}></div>
                       <div className="row">
                         <div style={{borderRight: '1px solid #FFFFFF'}}
                              className="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                           <div className="percentage-container">
-                            {this.state.stats.session_accuracy > 0 ?
-                              <span className="percentage-number">{this.state.stats.session_accuracy}</span>
-                              :
-                              <span className="percentage-number">94</span>
-                            }
+                            <span className="percentage-number">{this.state.stats.session_accuracy}</span>
                             <span className="percentage-sign">%</span>
                             <p>Average accuracy</p>
                           </div>
                         </div>
                         <div className="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                           <div className="percentage-container">
-                            {this.state.stats.total_hours > 0 ?
-                              <span className="percentage-number">{this.state.stats.total_hours * 60}</span>
-                              :
-                              <span className="percentage-number">50</span>
-                            }
+                            <span className="percentage-number">{this.state.stats.total_hours * 60}</span>
                             <p>Total minutes spent</p>
                           </div>
                         </div>
                         <div style={{borderLeft: '1px solid #FFFFFF'}}
                              className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                           <div className="percentage-container">
-                            {this.state.stats.session_completed > 0 ?
-                              <span className="percentage-number">{this.state.stats.session_completed}</span>
-                              :
-                              <span className="percentage-number">18</span>
-                            }
+                            <span className="percentage-number">{this.state.stats.session_completed}</span>
                             <p>Number of sessions completed</p>
                           </div>
                         </div>
@@ -216,12 +203,7 @@ class MyStats extends Component {
                       <div className="row" style={{height: '100px'}}></div>
                       <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                          {this.state.stats.session_completed > 0 ?
-                            <span
-                              style={{margin: '6px 60px'}}>{this.state.stats.session_completed} Sessions completed</span>
-                            :
-                            <span style={{margin: '6px 60px'}}>1 Sessions completed</span>
-                          }
+                          <span style={{margin: '6px 60px'}}>{this.state.stats.session_completed} Sessions completed</span>
                           <br></br>
                           <div className="progress" style={{
                             borderRadius: '0px', transform: 'skew(-20deg)', width: '700px',
