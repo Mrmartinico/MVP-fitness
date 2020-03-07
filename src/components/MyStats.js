@@ -119,13 +119,13 @@ class MyStats extends Component {
 
   RankFormatter(cell, row) {
     if (row != null && row.rank == 1) {
-      return <span style={{color: 'white'}}>1st Place</span>
+      return <p><span style={{color: '#00C3CF'}}>1st </span><span style={{color: 'white'}}>Place</span></p>
     } else if (row != null && row.rank == 2) {
-      return <span style={{color: 'white'}}>2nd Place</span>
+      return <p><span style={{color: '#00C3CF'}}>2nd </span><span style={{color: 'white'}}>Place</span></p>
     } else if (row != null && row.rank == 3) {
-      return <span style={{color: 'white'}}>3rd Place</span>
+      return <p><span style={{color: '#00C3CF'}}>3rd </span><span style={{color: 'white'}}>Place</span></p>
     } else if (row != null && row.rank > 3) {
-      return <span style={{color: 'white'}}>{row.rank}th Place</span>
+      return <p><span style={{color: '#00C3CF'}}>{row.rank}th </span><span style={{color: 'white'}}>Place</span></p>
     }
   }
 
@@ -211,9 +211,9 @@ class MyStats extends Component {
                           }}>
                             <div className="progress-bar custome-progress" role="progressbar"
                                  style={{
-                                   width: 20 + '%',
+                                   width: (this.state.stats.session_completed*100)/20  + '%',
                                    background: '#382CFB',
-                                   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+                                   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                                  }}
                                  aria-valuenow={2}
                                  aria-valuemin={0} aria-valuemax={100}/>
