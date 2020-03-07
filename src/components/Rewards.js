@@ -104,7 +104,7 @@ class Rewards extends Component {
 
   render() {
     return (
-      <div>
+      <div id='rewards'>
         <div className="db-body">
           <CommonHeader history={this.props.history} value={'rewards'}/>
           <div className="scroll-db">
