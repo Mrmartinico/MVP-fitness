@@ -7,7 +7,8 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import 'react-circular-progressbar/dist/styles.css';
-
+import '@progress/kendo-theme-material/dist/all.css';
+import 'bootstrap-4-grid/css/grid.min.css';
 import * as serviceWorker from './serviceWorker';
 import "video-react/dist/video-react.css";
 import {LOCAL_STORAGE_KEY} from "./common/urlconstants";
@@ -25,7 +26,7 @@ function PrivateRoute({component: Component, ...rest}) {
       {...rest}
       render={
         (props) => {
-          console.log('>>> in route',localStorage.getItem(LOCAL_STORAGE_KEY));
+          console.log('>>> in route', localStorage.getItem(LOCAL_STORAGE_KEY));
           return localStorage.getItem(LOCAL_STORAGE_KEY) !== ''
             ? <Component {...props} />
             : <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
@@ -37,7 +38,7 @@ function PrivateRoute({component: Component, ...rest}) {
 
 const routing = (
   <Router>
-    <Route path='/' render={() => (<Redirect to="/dashboard" />)} />
+    <Route path='/' render={() => (<Redirect to="/dashboard"/>)}/>
     <Route path='/login' exact component={App}/>
     <Route path='/onboard' component={OnBoarding}/>
     <PrivateRoute path='/dashboard' component={Dashboard}/>

@@ -1286,3 +1286,93 @@ hr.divider {
     z-index: 1;
   }
 }
+#mystats {
+
+  h1 {
+    color: rgb(63, 81, 181);
+    font-weight: bold;
+  }
+
+  .buttons-right > button {
+    float: right;
+    margin: 5px;
+  }
+
+  .app-container {
+    padding: 10px;
+  }
+
+  .percentage-number {
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .percentage-sign {
+    color: white;
+    font-size: 40px;
+  }
+
+  .percentage-container {
+    text-align: center;
+  }
+
+  .percentage-container:first-child {
+    padding-bottom: 3em;
+  }
+
+  .container .row div {
+    /* outline: solid 1px white !important; */
+  }
+
+  .bootstrap-wrapper {
+    color: black;
+  }
+
+  /* Progress bar container */
+  .progress-bar {
+    position: relative;
+    width: 700px;
+    height: 22px;
+    background: rgba(181, 181, 181, 0.3);
+  }
+
+  .filler {
+    background: #382CFB;
+    width: 59px;
+    height: 30px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Managing ranking style with logo */
+  .rankingcontainer {
+    position: relative;
+    width: 85%;
+  }
+
+  .rankingimage {
+    opacity: 3;
+    display: block;
+    height: auto;
+  }
+
+  .rankingmiddle {
+    opacity: 1;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+  .col-hidden {
+    display: none
+  }
+
+  .bootstrap-wrapper {
+    background: black;
+    color: white;
+  }
+
+
+}

@@ -64,7 +64,7 @@ class CommonHeader extends Component {
               <select className="menu-dropdown" onChange={this.change} value={this.state.value}>
                 <option value='dashboard'>Home</option>
                 <option value='rewards'>Rewards</option>
-                {/*<option value='sessions'>Sessions</option>*/}
+                <option value='mystats'>My Stats</option>
               </select>
             </div>
           </div>
