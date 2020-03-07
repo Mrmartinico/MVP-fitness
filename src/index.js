@@ -15,6 +15,7 @@ import Dashboard from './components/Dashboard';
 import LiveYoga from "./components/LiveYoga";
 import Rewards from "./components/Rewards";
 import OnBoarding from "./components/OnBoarding";
+import MyStats from "./components/MyStats";
 import App from './App';
 
 
@@ -36,12 +37,13 @@ function PrivateRoute({component: Component, ...rest}) {
 
 const routing = (
   <Router>
-    <PrivateRoute path="/live" component={LiveYoga} />
-    <PrivateRoute path="/dashboard" component={Dashboard} />
-    <PrivateRoute path="/rewards" component={Rewards} />
-    <Route path="/" render={() => <Redirect to="/dashboard" />} />
-    <Route path="/login" exact component={App} />
-    <Route path="/onboard" component={OnBoarding} />
+    <Route path='/' render={() => (<Redirect to="/dashboard" />)} />
+    <Route path='/login' exact component={App}/>
+    <Route path='/onboard' component={OnBoarding}/>
+    <PrivateRoute path='/dashboard' component={Dashboard}/>
+    <PrivateRoute path='/live' component={LiveYoga}/>
+    <PrivateRoute path='/rewards' component={Rewards}/>
+    <PrivateRoute path='/mystats' component={MyStats}/>
   </Router>
 );
 
