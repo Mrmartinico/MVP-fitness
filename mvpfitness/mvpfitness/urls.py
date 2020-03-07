@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^session/', include('home.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^reward/', include('rewards.urls')),
+    url(r'^refresher/', include('refreshers.urls'))
 ]

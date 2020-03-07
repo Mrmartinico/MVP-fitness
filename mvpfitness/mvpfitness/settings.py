@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'users',
     'home',
     'rewards',
-    'rest_framework'
+    'rest_framework',
+    'refreshers'
 ]
 
 MIDDLEWARE = [
