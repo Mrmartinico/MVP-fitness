@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "../App.scss";
 
 import WebcamSetup from "../framework/webcam";
 import Model from "../framework/model.js";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import * as tf from "@tensorflow/tfjs";
-
 // import lVedio from '../vedio/yoga_1.mp4' //  change your vedio here
 // imports for the instruct pose images
 import downDog from "../assests/poses/downDog.jpg";
@@ -17,6 +16,7 @@ import vasisthasanaLeft from "../assests/poses/vasisthasanaLeft.jpg";
 import vasisthasanaRight from "../assests/poses/vasisthasanaRight.jpg";
 import vriksasana from "../assests/poses/vriksasana.jpg";
 import warriorII from "../assests/poses/warriorII.jpg";
+import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
 
 const CLASS_2_INDEX = {
   bridge: 0,
@@ -32,7 +32,7 @@ const CLASS_2_INDEX = {
 };
 
 const DEFAULT_ROUTINE = [
-  { ml_model_pose_name: "squat", id: CLASS_2_INDEX.squat, time: 30 },
+  {ml_model_pose_name: "squat", id: CLASS_2_INDEX.squat, time: 30},
   {
     ml_model_pose_name: "warrior_ii",
     id: CLASS_2_INDEX.warrior_ii,
@@ -66,6 +66,11 @@ const DEFAULT_ROUTINE = [
 ];
 
 class LiveYoga extends Component {
+  static userInfo = "";
+  static defaultProps = {
+    loadingText: "Loading...please be patient..."
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -94,53 +99,51 @@ class LiveYoga extends Component {
     this.currentPose = 0;
 
     // Visual feedback configuration
-    this.redMask = { r: 255, g: 0, b: 0, a: 130 };
-    this.greenMask = { r: 0, g: 255, b: 0, a: 130 };
-    this.backgroundMask = { r: 0, g: 0, b: 0, a: 0 };
+    this.redMask = {r: 255, g: 0, b: 0, a: 130};
+    this.greenMask = {r: 0, g: 255, b: 0, a: 130};
+    this.backgroundMask = {r: 0, g: 0, b: 0, a: 0};
     this.opacity = 0.45;
   }
 
-  static userInfo = "";
-  static defaultProps = {
-    loadingText: "Loading...please be patient..."
-  };
-
   async componentDidMount() {
-    // entry point of app
+    try { // entry point of app
 
-    // Loading ML models
-    this.model = new Model();
-    this.bodyPixNet = await this.model.loadBodyPix("mobile");
-    this.poseClassifier = await this.model.loadPoseClassifier();
+      // Loading ML models
+      this.model = new Model();
+      this.bodyPixNet = await this.model.loadBodyPix("mobile");
+      this.poseClassifier = await this.model.loadPoseClassifier();
 
-    // actual video res captured, not the canvas resolution
-    // smaller -> faster
-    // bigger -> more accurate
-    this.videoWidth = 640;
-    this.videoHeight = 720;
+      // actual video res captured, not the canvas resolution
+      // smaller -> faster
+      // bigger -> more accurate
+      this.videoWidth = 640;
+      this.videoHeight = 570;
 
-    // bootstrap webcam
-    try {
-      this.video = await this.loadVideo();
+      // bootstrap webcam
+      try {
+        this.video = await this.loadVideo();
+      } catch (e) {
+        console.log(e);
+        throw e;
+      }
+      console.log("Video loaded");
+
+      // where we are writing the user frames
+      this.canvas = document.getElementById("output");
+
+      // TODO: update it with a state
+      this.scoreboard = document.getElementById("scoreboard");
+
+      // set correct canvas dims
+      this.canvas.width = this.videoWidth;
+      this.canvas.height = this.videoHeight;
+
+      // Start the routine
+      await this.startUserRoutine();
+      this.changePose(this.routine[this.currentPose]);
     } catch (e) {
       console.log(e);
-      throw e;
     }
-    console.log("Video loaded");
-
-    // where we are writing the user frames
-    this.canvas = document.getElementById("output");
-
-    // TODO: update it with a state
-    this.scoreboard = document.getElementById("scoreboard");
-
-    // set correct canvas dims
-    this.canvas.width = this.videoWidth;
-    this.canvas.height = this.videoHeight;
-
-    // Start the routine
-    await this.startUserRoutine();
-    this.changePose(this.routine[this.currentPose]);
   }
 
   getTimeDiff() {
@@ -239,7 +242,7 @@ class LiveYoga extends Component {
       scoreboard = "0 %";
     }
 
-    this.setState({ scoreboard });
+    this.setState({scoreboard});
   }
 
   // Preprocessing step before feeding the image into the ml
@@ -404,17 +407,19 @@ class LiveYoga extends Component {
 
   render() {
     return (
-      <div className="App db-body">
+      <div id="liveyoga" className="App db-body">
         {/* Write all html here */}
-        <div className="rightside d-flex justify-content-center align-items-center">
-          <h1 style={{ fontSize: 72 }} id="scoreboard">
-            {this.state.scoreboard}
-          </h1>
-        </div>
-        <div className="rightside d-flex justify-content-center align-items-center">
-          <h1 style={{ fontSize: 56 }} id="elapsed_time">
-            {Math.round(this.state.elapsedTime)} / {this.state.holdTime}
-          </h1>
+        <div className="float-above">
+          <div className="rightside d-flex justify-content-center align-items-center">
+            <h5 className="text-white" style={{fontSize: 40}} id="scoreboard">
+              {this.state.scoreboard}
+            </h5>
+          </div>
+          <div className="rightside d-flex justify-content-center align-items-center">
+            <h5 className="text-white" style={{fontSize: 40}} id="elapsed_time">
+              {Math.round(this.state.elapsedTime)} / {this.state.holdTime}
+            </h5>
+          </div>
         </div>
         <div className="row no-gutters">
           <div className="col-md-6 no-gutters">
@@ -431,9 +436,11 @@ class LiveYoga extends Component {
               </video> */}
               <img
                 id="instructor"
-                style={{ objectFit: "contain" }}
-                width="75%"
-                height="75%"
+                style={{
+                  objectFit: "contain", width: "100%",
+                  height: "570px"
+                }}
+
                 src={this.state.instructorPose}
               ></img>
               {/* <canvas id="c" /> */}
@@ -442,8 +449,61 @@ class LiveYoga extends Component {
           <div className="col-md-6 no-gutters">
             <div className="leftside d-flex justify-content-center align-items-center">
               <canvas id="output">
-                <video id="vid" controls width={"720px"} height={"800px"} />
+                <video id="vid" controls width={"720px"} height={"800px"}/>
               </canvas>
+            </div>
+          </div>
+        </div>
+
+
+        {/* Modal
+          use below line to open and close model
+           window.$('#myModal-session').modal('toggle');
+        */}
+
+        <div className="modal fade my-modal" id="myModal-session">
+          <div className="modal-dialog ">
+            <div className="modal-content scroll">
+              <div className="modal-body">
+                <div className="inner-body">
+                  <div className="modal-inner-content">
+                    <CircularProgressbar
+                      value={this.state.percentage}
+                      text={`${this.state.percentage}%`}
+                      styles={buildStyles({
+                        // Rotation of path and trail, in number of turns (0-1)
+                        rotation: 1,
+
+                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                        strokeLinecap: 'butt',
+
+                        // Text size
+                        textSize: '16px',
+
+                        // How long animation takes to go from one percentage to another, in seconds
+                        pathTransitionDuration: 0.5,
+
+                        // Can specify path transition in more detail, or remove it entirely
+                        // pathTransition: 'none',
+
+                        // Colors
+                        pathColor: `rgba(127,255, ${this.state.percentage / 100})`,
+                        textColor: '#ffffff',
+                        trailColor: '#ffffff',
+                        backgroundColor: '#ffffff',
+                      })}
+                    />
+                    <p>Congrats! </p>
+                    <p>
+                      You just completed your first session ever with 64% of accuracy. You can now jump onto your
+                      dashboard and start exercising.</p>
+                    <p> Ready for your Motus journey?</p>
+                    <button type="button" className="btn img-btn br-0">Start</button>
+                    <button type="button" className="btn img-btn-black br-0">Share</button>
+
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

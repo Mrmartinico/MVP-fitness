@@ -22,6 +22,7 @@ class OnBoarding extends Component {
     super(props);
     this.state = {
       error: '',
+      percentage: 65,
       loginError: '',
       isSignedIn: false,
       showlogin: true,
@@ -138,15 +139,17 @@ class OnBoarding extends Component {
                   <option value="157">5’2” (157 cm)</option>
                   <option value="160">5’3” (160 cm)</option>
                   <option value="162">5’4” (162 cm)</option>
+                  {/*<option value="165">5’5” (165 cm)</option>*/}
                 </select>
               </div>
               <div className="col-6">
                 <p className="dob-text"> Date of birth</p>
-                <input id="dob" className="date" type="date"/>
+                <input id="dob" className="date" min="1901-01-01" max="2020-12-30" type="date"/>
                 <p className="dob-text mt-36">Weight</p>
                 <select id="weight" className="select-drop">
                   <option value=""></option>
                   <option value="88">88 lb (40 kg)</option>
+                  <option value="90">90 lb (41 kg)</option>
                   <option value="92">92 lb (42 kg)</option>
                   <option value="94">94 lb (43 kg)</option>
                   <option value="97">97 lb (44 kg)</option>
@@ -173,6 +176,7 @@ class OnBoarding extends Component {
               <select id="when" className="select-drop">
                 <option value=""></option>
                 <option value="Morning">Morning</option>
+                <option value="Noon">Afternoon</option>
                 <option value="Afternoon">Afternoon</option>
                 <option value="Evening">Evening</option>
                 <option value="Night">Night</option>
@@ -489,7 +493,6 @@ class OnBoarding extends Component {
 
             {/* <button type="button" className="btn global-btn mr-2">Begin</button> */}
           </div>
-
         }
       </div>
     )
