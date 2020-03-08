@@ -8,4 +8,5 @@ app_name = 'shopdrawing'
 
 urlpatterns = [
     path('<int:routine_id>/', refresher.PoseDetailsView.as_view(), name='Pose_details'),
+    path('users/poses/create', refresher.UserPosesView.as_view(), name='User Poses')
 ]

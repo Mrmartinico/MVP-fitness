@@ -2,11 +2,12 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework import serializers
 from .models import *
 from dict import dict
+from datetime import datetime
 
-
+now = datetime.now()
 # class RefresherSerializers(ModelSerializer):
 #
-#     class Meta:
+# class Meta:
 #         model = Refresher
 #         fields = ('id', 'fitness_id', 'session_name', 'number_of_poses', 'estimated_time', 'pose_details')
 #
@@ -117,3 +118,20 @@ class PoseDetailSerializers(ModelSerializer):
     class Meta:
         model = PosesRoutine
         fields = ('id', 'ml_model_pose_name', 'holding_time')
+
+
+class UserPoseSerializers(ModelSerializer):
+    class Meta:
+        model = UserRoutine
+        fields = ('user_id', 'routine_id', 'pose_id', 'device_type', 'version', 'browser', 'browser_version', 'os',
+                  'start_time', 'end_time', 'session_type', 'impression_count', 'ip_address', 'comments',
+                  'user_duration', 'pose_accuracy')
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        import pdb;pdb.set_trace()
+        user_routine = UserRoutine(**validated_data)
+        user_routine.created_by = user
+        user_routine.created_at = now
+        user_routine.save()
+        return user_routine

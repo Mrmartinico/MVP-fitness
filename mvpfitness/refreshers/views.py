@@ -13,6 +13,6 @@ class PoseDetailsView(ListAPIView):
         return queryset
 
 
-# # class RoutineView(CreateAPIView):
-# #     serializer_class = RoutineSerializers
-# #     queryset = Routine.objects.all()
+class UserPosesView(CreateAPIView):
+    serializer_class = UserPoseSerializers
+    queryset = Routine.objects.all()

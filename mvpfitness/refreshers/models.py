@@ -63,10 +63,3 @@ class UserRoutine(models.Model):
     pose_accuracy = models.DecimalField(max_digits=5, decimal_places=2)
     created_at = models.DateTimeField()
     created_by = models.CharField(max_length=150)
-
-
-    def save(self, **kwargs):
-        if not self.id:
-            count = Counter.get_counter(self, 'usr_routine')
-            self.id = "{}{:03d}".format('usr_routine_', count)
-        super().save(*kwargs)
