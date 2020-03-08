@@ -1,5 +1,6 @@
 import { drawKeyPoints, drawSkeleton } from './utils'
 import React, { Component } from 'react'
+import logoicon from "../assests/shadow_logo.png";
 
 class Login extends Component {
 
@@ -20,8 +21,8 @@ class Login extends Component {
             <div className="container">
                 <div className="row centered-form">
                     <div className="col-xs-12 col-sm-6 col-md-8  col-lg-8 col-xl-8">
-                    <img src="https://im3.ezgif.com/tmp/ezgif-3-5c58cf32e43c.gif" />
-                    </div>
+                    {/*<img src="https://im3.ezgif.com/tmp/ezgif-3-5c58cf32e43c.gif" />*/}
+c                    </div>
                     <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                         <div className="borderblack">
                             <div className="panel panel-default">
