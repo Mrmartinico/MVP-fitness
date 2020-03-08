@@ -82,7 +82,7 @@ class OnBoarding extends Component {
             at the end<br/> <br/>
             Ready?
           </p>
-          <button onClick={this.nextForm} className="btn-calender">NEXT</button>
+          <button onClick={this.goToLiveSession} className="btn-calender">NEXT</button>
         </div>
       )
     } else if (this.state.page === 3) {
@@ -109,7 +109,7 @@ class OnBoarding extends Component {
           <p className="p-content">Upload a picture </p>
           <button className="btn-blue">Take a picture</button>
           <br/>
-          <button className="btn-white">Browse</button>
+          <button className="btn-white border-black-r-1px">Browse</button>
           <br/>
           <button onClick={this.nextForm} className="btn-calender">NEXT</button>
         </div>
@@ -191,6 +191,7 @@ class OnBoarding extends Component {
     }
   };
   nextForm = () => {
+    window.analytics.page(`OnBoarding - Page ${this.state.page}`);
     if (this.state.page === 1) {
 
       const gender = document.getElementById("gender");
@@ -204,7 +205,21 @@ class OnBoarding extends Component {
       const when = document.getElementById("when");
       const selectedwhen = when.options[when.selectedIndex].value;
       const dob = document.getElementById("dob");
-      const selectedDob = dob.value;
+      let selectedDob = dob.value;
+      if (selectedDob) {
+        const date = new Date(selectedDob);
+        let month = (date.getMonth() + 1);
+        month = month < 10 ? '0' + month : month;
+        let day = date.getDate();
+        day = day < 10 ? '0' + day : day;
+        let year = date.getFullYear();
+        if (year < 1901) {
+          this.setState({error: 'Invalid year in Date of Birth'});
+          return false;
+        }
+
+        selectedDob = `${day}-${month}-${year}`
+      }
       this.setState({
         when: selectedwhen,
         dob: selectedDob,
@@ -311,13 +326,14 @@ class OnBoarding extends Component {
           this.setState({loginInfo: res});
           this.setState({loginStatus: true});
           this.props.history.push('/dashboard');
-
+          // this.setState({page: this.state.page + 1});
         } else {
           this.setState({signUpType: 'socialmedia'});
           this.setState({page: this.state.page + 1});
         }
 
       }, err => {
+        this.setState({error: 'Something went wrong, please try again'});
         this.loading(false);
       })
     }
@@ -327,16 +343,8 @@ class OnBoarding extends Component {
     this.setState({error: ''});
     console.log(this.state);
     this.loading(true);
-    let dob = '';
-    if (this.state.dob) {
-      const date = new Date(this.state.dob);
-      let month = (date.getMonth() + 1);
-      month = month < 10 ? '0' + month : month;
-      let day = date.getDate();
-      day = day < 10 ? '0' + day : day;
-      let year = date.getFullYear();
-      dob = `${day}-${month}-${year}`
-    }
+    let dob = this.state.dob;
+
     console.log(dob);
     fetch(SIGN_UP_URL, {
       method: 'POST',
@@ -376,6 +384,26 @@ class OnBoarding extends Component {
 
       console.log(' >>>> SIGN UP ', res);
       if (res.status === "User Email Already exists") {
+        // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
+        //   "full_name": "",
+        //   "email": "syedikramali37@gmail.com",
+        //   "user_id": "usr_072",
+        //   "user_type": "user",
+        //   "user_exist": true,
+        //   "social_media_id": "108445140110460176851"
+        // }));
+        //
+        // this.setState({
+        //   loginInfo: {
+        //     "full_name": "",
+        //     "email": "syedikramali37@gmail.com",
+        //     "user_id": "usr_072",
+        //     "user_type": "user",
+        //     "user_exist": true,
+        //     "social_media_id": "108445140110460176851"
+        //   }, loginStatus: true,
+        //   page: this.state.page + 1
+        // })
         // this.nextForm();
         this.setState({error: 'User Email Already exists'});
         this.setState({page: 0});
@@ -398,6 +426,9 @@ class OnBoarding extends Component {
 
   goToDashboard = () => {
     this.props.history.push('/dashboard');
+  };
+  goToLiveSession = () => {
+    this.props.history.push('/live');
   };
 
   render() {
@@ -459,8 +490,14 @@ class OnBoarding extends Component {
                           )}
                         />
                       </div>
+                      <div className="pos-bottom">
+                        <h6>By joining Motus you agree to the
+                          <a href="https://www.websitepolicies.com/policies/view/rshDySyv"> Terms & Conditions</a> of
+                          the platform</h6>
+                      </div>
 
                     </div>
+
                   </div>
                 </div>
                 :

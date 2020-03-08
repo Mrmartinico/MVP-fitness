@@ -404,11 +404,19 @@ class LiveYoga extends Component {
     this.processFrame.bind(this);
     this.processFrame();
   }
+  goToDashboard = () => {
+    this.props.history.push('/dashboard');
+  };
 
   render() {
     return (
-      <div id="liveyoga" className="App db-body">
+      <div id="liveyoga" className="App db-body h-100per">
         {/* Write all html here */}
+
+        <div className="float-above-left">
+          <button type="button" onClick={this.goToDashboard} className="btn global-btn mt-5px">Go to Dashboard</button>
+
+        </div>
         <div className="float-above">
           <div className="rightside d-flex justify-content-center align-items-center">
             <h5 className="text-white" style={{fontSize: 40}} id="scoreboard">
@@ -421,9 +429,9 @@ class LiveYoga extends Component {
             </h5>
           </div>
         </div>
-        <div className="row no-gutters">
+        <div className="row no-gutters h-100per">
           <div className="col-md-6 no-gutters">
-            <div className="rightside d-flex justify-content-center align-items-center">
+            <div className="rightside d-flex justify-content-center align-items-center h-100per">
               {/* <video
                 controls
                 hidden
@@ -446,7 +454,7 @@ class LiveYoga extends Component {
               {/* <canvas id="c" /> */}
             </div>
           </div>
-          <div className="col-md-6 no-gutters">
+          <div className="col-md-6 no-gutters h-100per">
             <div className="leftside d-flex justify-content-center align-items-center">
               <canvas id="output">
                 <video id="vid" controls width={"720px"} height={"800px"}/>

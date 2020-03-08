@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
 
+#root {
+  height: 100%;
+}
+
+.h-100per {
+  height: 100%;
+}
 
 .App {
   text-align: center;
@@ -336,6 +343,10 @@ h1 {
 
 .border-r-1px {
   border-right: 1px solid #b5b5b5;
+}
+
+.border-black-r-1px {
+  border: 1px solid black !important;
 }
 
 .upload {
@@ -766,6 +777,10 @@ h1 {
   margin: 10px;
 }
 
+.pos-bottom {
+  position: fixed;
+  bottom: 0;
+}
 
 /* dashboard */
 /* OnBoard Vedio*/
@@ -1303,6 +1318,13 @@ hr.divider {
     position: absolute;
     top: 0px;
     right: 20px;
+    z-index: 1;
+  }
+
+  .float-above-left {
+    position: absolute;
+    top: 0px;
+    left: 20px;
     z-index: 1;
   }
 }
