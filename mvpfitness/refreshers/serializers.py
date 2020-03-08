@@ -129,9 +129,29 @@ class UserPoseSerializers(ModelSerializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        import pdb;pdb.set_trace()
         user_routine = UserRoutine(**validated_data)
         user_routine.created_by = user
         user_routine.created_at = now
         user_routine.save()
         return user_routine
+
+
+class RoutineSerializer(ModelSerializer):
+
+    class Meta:
+        model = Routine
+        fields = ('id', 'routing_name', 'difficulty')
+
+
+class PosesSerializer(ModelSerializer):
+
+    class Meta:
+        model = Poses
+        fields = ('id', 'fitness_id', 'pose_name', 'ml_model_pose_name', 'difficulty', 'image_url')
+
+
+class RoutinePosesSerializer(ModelSerializer):
+
+    class Meta:
+        model = PosesRoutine
+        fields = ('id', 'pose_id', 'routine_id', 'holding_time', 'position')
