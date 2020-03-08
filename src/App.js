@@ -8,12 +8,6 @@ import landingImgBigWorkouts from './assests/best-pilates-youtube-workouts-2__bi
 import landingImgGymInstructor from './assests/Gym-Instructor.jpg';
 import landingImgYogoForEveryone from './assests/yoga-for-everyone_promo-superJumbo_bis.jpg';
 
-import logoLinkedin from './assests/1024px-LinkedIn_Logo 1.jpg';
-import logoFacebook from './assests/facebook_logos_PNG19749 1.jpg';
-import logoInstagram from './assests/instagram-logo-text-blue-png 1.jpg';
-import logoTwitter from './assests/twitter-logo 1.jpg';
-import logoicon from './assests/shadow_logo.png';
-
 import lottie from 'lottie-web';
 import animationData from './lottie/9236-right-arrow.json';
 import logoicon from "./assests/shadow_logo.png";
@@ -86,16 +80,9 @@ class App extends React.Component {
         <div id="landingpage">
           <header className="nav-topMenu">
             <nav className="navbar navbar-expand-lg" style={{boxShadow: 'none'}}>
-<<<<<<< HEAD
-              <div className="col-6 logo">
-                <img src={logoicon} alt="logo"/>
-                <span className="spanheadertxt">Motus</span>
-              </div>
-=======
               {/*<div className="square"></div>*/}
               <img src={logoicon} alt="logo"/>
               <span className="spanheadertxt">Motus</span>
->>>>>>> 0b6847836e6dc6cb3c49c291863cbc5b2a023090
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"/>
