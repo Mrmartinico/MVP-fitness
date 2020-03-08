@@ -12,6 +12,7 @@ import logoLinkedin from './assests/1024px-LinkedIn_Logo 1.jpg';
 import logoFacebook from './assests/facebook_logos_PNG19749 1.jpg';
 import logoInstagram from './assests/instagram-logo-text-blue-png 1.jpg';
 import logoTwitter from './assests/twitter-logo 1.jpg';
+import logoicon from './assests/shadow_logo.png';
 
 import lottie from 'lottie-web';
 import animationData from './lottie/9236-right-arrow.json';
@@ -59,7 +60,11 @@ class App extends React.Component {
       renderer: 'canvas',
       loop: true,
       autoplay: true,
-      animationData: animationData // the path to the animation json
+      animationData: animationData, // the path to the animation json
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice',
+        className: 'lottieanimation'
+      }
     });
   }
 
@@ -80,8 +85,10 @@ class App extends React.Component {
         <div id="landingpage">
           <header className="nav-topMenu">
             <nav className="navbar navbar-expand-lg" style={{boxShadow: 'none'}}>
-              <div className="square"></div>
-              <span className="spanheadertxt">Motus</span>
+              <div className="col-6 logo">
+                <img src={logoicon} alt="logo"/>
+                <span className="spanheadertxt">Motus</span>
+              </div>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"/>
@@ -112,33 +119,24 @@ class App extends React.Component {
                   <h2 className="section_title mt-0">Motus</h2>
                   <br></br>
                   <hr className="underliningMotus"></hr>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
+
+                  <div className="row" style={{height: '192px'}}></div>
 
                   <div className="bannertxt">
-                    <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                      eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p className="text-muted mb-5">Get real time visual feedback while learning fitness activities.</p>
                   </div>
                   <br></br>
                   <br></br>
 
                   <div>
-                    <div className="animBox" ref={ref => this.animBox = ref}></div>
+                    <div onClick={this.openSignUpModel} className="animBox" ref={ref => this.animBox = ref}></div>
                   </div>
                 </div>
 
                 <div className="col-6 col-sm-6 containeryogaImg">
                   <img style={{width: '668px'}} src={landingImgYogoForEveryone}/>
                   <div className="expYogatxt"><h2 className="mt-0">Experience Yoga</h2></div>
-                  <div className="yogardmtxt"><p className="text-white mb-5">"Lorem ipsum dolor sit amet, consectetur <br/>
-                    adipiscing elit, sed"</p></div>
+                  <div className="yogardmtxt"><p className="text-white mb-5">Real-time visual feedback to learn fitness activity accurately, anywhere you are.</p></div>
                   <br></br>
                   <br></br>
                   <button className="expYogabtn" onClick={this.openSignUpModel}>Start your first session</button>
@@ -146,21 +144,8 @@ class App extends React.Component {
               </div>
             </div>
           </section>
-          <section className="socialsec p-2">
-            <div className="container ">
-              <div className="row">
-                <div className="col"><a className="nav-link" target="_blank" href="https://www.linkedin.com/"><img
-                  src={logoLinkedin}/></a></div>
-                <div className="col"><a className="nav-link" target="_blank" href="https://www.facebook.com"><img
-                  src={logoFacebook}/></a></div>
-                <div className="col"><a className="nav-link" target="_blank" href="https://www.instagram.com"><img
-                  src={logoInstagram}/></a></div>
-                <div className="col"><a className="nav-link" target="_blank" href="https://www.twitter.com"><img
-                  src={logoTwitter}/></a></div>
-              </div>
-            </div>
-          </section>
-
+          
+          <div className="row" style={{height: '30px'}}></div>
           <section className="yoga mt-10per">
             <div className="container">
               <div className="row">
@@ -171,10 +156,10 @@ class App extends React.Component {
 
 
                   <div style={{paddingLeft: '10%'}}>
-                    <h2 className="section_title mt-0">Yoga</h2>
+                    <h2 className="section_title mt-0">Refreshers</h2>
                     <br></br>
                     <br></br>
-                    <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                    <p className="text-muted mb-5">5 minute quick workouts to refreshen you up! Get live visual feedback and know how you are performing</p>
                     <button onClick={this.openSignUpModel} className="explorebtn">Explore</button>
                   </div>
                   <hr className="divider my-4"></hr>
@@ -183,16 +168,14 @@ class App extends React.Component {
             </div>
           </section>
 
-
           <section className="livefeedback mt-10per">
             <div className="container">
               <div className="row">
-                <div className="col-sm-6 livefeedbackline">
-                  <h2 className="section_title mt-0">Live</h2><br></br>
-                  <h2 className="section_title mt-0">Feedback</h2>
+                <div style={{borderBottom: '3px solid black'}} className="col-sm-6">
+                  <h2 className="section_title mt-0">Sessions</h2><br></br>
                   <br></br>
                   <br></br>
-                  <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                  <p className="text-muted mb-5">Intense 30 minute workouts with visual feedback, it’s like having your personal trainer without their physical presence!</p>
                   <button onClick={this.openSignUpModel} className="explorebtn">Explore</button>
                 </div>
                 <div className="col-6 ml-auto text-left mb-5 mb-lg-0">
@@ -214,7 +197,7 @@ class App extends React.Component {
                     <h2 className="section_title">Instructors</h2>
                     <br></br>
                     <br></br>
-                    <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                    <p className="text-muted mb-5">Learn from the best instructors, get visual feedback and improve your performance, it’s like having an instructor with you without their physical presence!</p>
                     <button onClick={this.openSignUpModel} className="explorebtn">Explore</button>
                   </div>
                   <br></br>
@@ -223,34 +206,31 @@ class App extends React.Component {
                   <div className="row">
                     <div className="col-7 ml-auto">
                       <img src={landingImgWorkouts}/>
-                      <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                      <p className="text-muted mb-5">New lessons added every week!</p>
                     </div>
                     <div className="col-5 ml-auto text-left mb-5 mb-lg-0">
                       <img src={landingImgGymInstructor}/>
-                      <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                      <p className="text-muted mb-5">Learn from the best instructors</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-
+          
+          <div className="row" style={{height: '100px'}}></div>
           <section className="sessions mt-10per">
             <div className="container">
               <div className="row">
-                <div className="col-6">
-                  <h2 className="section_title mt-0">Sessions</h2>
-                  <br></br>
+                <div style={{borderBottom: '3px solid black'}} className="col-6">
+                  <h2 className="section_title mt-0">Live</h2>
+                  <h2 className="section_title mt-0">Feedback</h2>
                   <br></br>
                   <br></br>
 
-                  <p className="text-muted mb-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                  <p className="text-muted mb-5">Get accuracy percentage as you make the pose! Receive overall session accuracy score at the end of the session.</p>
                   <button onClick={this.openSignUpModel} className="explorebtn">Explore</button>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
+                  
                 </div>
                 <div className="col-6 ml-auto text-center mb-5 mb-lg-0">
                   <img src={landingImgBigWorkouts}/>
@@ -259,71 +239,26 @@ class App extends React.Component {
             </div>
           </section>
 
+          <div className="row" style={{height: '165px'}}></div>
           <section className="page-footer">
             <footer>
               <div className="container text-center text-md-left">
                 <div className="row text-center text-md-left mt-3 pb-3">
-                  <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                  <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <h3 className="section_title_footer">Motus</h3>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"</p>
+                    <p style={{float: 'left'}}>Power to Habits</p>
                   </div>
-                  <hr className="clearfix w-100 d-md-none pb-3"></hr>
-                  <div className="col-md-2 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Company</h5>
+                  <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                    <h5 className="text-uppercase">Contacts & Support</h5>
                     <ul className="list-unstyled">
                       <li>
-                        <a>About</a>
+                      <a style={{color: 'white'}} href="mailto:hello@motus.fit">hello@motus.fit</a>
                       </li>
                       <li>
-                        <a>Technology</a>
+                        <a style={{color: 'white'}} href="https://www.facebook.com/Motus-101019148164623">Facebook</a>
                       </li>
                       <li>
-                        <a>Careers</a>
-                      </li>
-                      <li>
-                        <a>Partners</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Subscription</h5>
-                    <ul className="list-unstyled">
-                      <li>
-                        <a>Pricing </a>
-                      </li>
-                      <li>
-                        <a>Activities</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Support</h5>
-                    <ul className="list-unstyled">
-                      <li>
-                        <a>FAQ</a>
-                      </li>
-                      <li>
-                        <a>Help</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Contacts</h5>
-                    <ul className="list-unstyled">
-                      <li>
-                        <a>blabla@blabla.com</a>
-                      </li>
-                      <li>
-                        <a>Facebook</a>
-                      </li>
-                      <li>
-                        <a>LinkedIn</a>
-                      </li>
-                      <li>
-                        <a>Instagram</a>
-                      </li>
-                      <li>
-                        <a>Twitter</a>
+                        <a style={{color: 'white'}} href ="https://www.instagram.com/invites/contact/?i=72eo1fqem5ve&utm_content=ek93frh">Instagram</a>
                       </li>
                     </ul>
                   </div>

@@ -1123,10 +1123,6 @@ button.explorebtn {
   line-height: 42px;
 }
 
-div.livefeedbackline, .sessions {
-  border-bottom: 3px solid #000000;
-}
-
 .socialsec {
   border-bottom: 0.5px solid #E8E8E8;
 }
@@ -1159,7 +1155,6 @@ section.page-footer {
 
 section.bannerLanding {
   margin-top: 2%;
-  border-bottom: 0.5px solid #E8E8E8;
 }
 
 .spanheadertxt {
@@ -1237,13 +1232,14 @@ div.containeryogaImg {
   width: 61px;
   height: 45px;
   top: 660px;
-  float: right;
+  margin-left: 510px;
 }
 
 hr.divider {
   width: 521px;
   height: 3px;
   background: #000000;
+  padding-right: 20px;
 }
 
 .expYogabtn {
@@ -1373,6 +1369,4 @@ hr.divider {
     background: black;
     color: white;
   }
-
-
 }
