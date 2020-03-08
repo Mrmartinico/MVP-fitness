@@ -138,7 +138,7 @@ class MyStats extends Component {
             <div className="row" style={{height: '30px'}}></div>
             <div className="app-container container">
               <div className="row">
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div style={{borderRight: '1px solid #FFFFFF'}} className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                   <h4>Leaderboard</h4>
                   <br></br>
                   {(this.state.stats && this.state.stats.rewards && this.state.stats.rewards.sessions_completed) ?
@@ -160,7 +160,7 @@ class MyStats extends Component {
                         <Button style={{
                           width: '82px', height: '21px', borderRadius: '20px',
                           background: '#FFFFFF', border: '1px solid #FFFFFF', boxSizing: 'border-box'
-                        }} className="com-button">View all</Button>
+                        }} className="com-button"><span style={{fontSize: '10px', lineHeight: '12px'}}>View all</span> </Button>
                       </div>
                     </div>
                     :
@@ -178,9 +178,8 @@ class MyStats extends Component {
                     <div>
                       <div className="row" style={{height: '80px'}}></div>
                       <div className="row">
-                        <div style={{borderRight: '1px solid #FFFFFF'}}
-                             className="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                          <div className="percentage-container">
+                        <div className="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                          <div style={{borderRight: '1px solid #FFFFFF'}} className="percentage-container">
                             <span className="percentage-number">{this.state.stats.session_accuracy}</span>
                             <span className="percentage-sign">%</span>
                             <p>Average accuracy</p>
@@ -192,9 +191,8 @@ class MyStats extends Component {
                             <p>Total minutes spent</p>
                           </div>
                         </div>
-                        <div style={{borderLeft: '1px solid #FFFFFF'}}
-                             className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                          <div className="percentage-container">
+                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                          <div style={{borderLeft: '1px solid #FFFFFF'}} className="percentage-container">
                             <span className="percentage-number">{this.state.stats.session_completed}</span>
                             <p>Number of sessions completed</p>
                           </div>
@@ -203,8 +201,9 @@ class MyStats extends Component {
                       <div className="row" style={{height: '100px'}}></div>
                       <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                          <span style={{margin: '6px 60px'}}>{this.state.stats.session_completed} Sessions completed</span>
-                          <br></br>
+                            <span style={{margin: '6px 60px'}}>{this.state.stats.session_completed} Sessions completed</span>
+                            <span style={{float: 'right'}} className="color-white">{this.state.stats.rewards.remaining_sessions} of {this.state.stats.rewards.sessions_completed}</span>
+
                           <div className="progress" style={{
                             borderRadius: '0px', transform: 'skew(-20deg)', width: '700px',
                             background: '#555', height: '22px', margin: '6px 60px'
@@ -224,11 +223,11 @@ class MyStats extends Component {
                       <div className="row">
                         <div className="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                           <div>
-                            <h4>Performance Track</h4>
+                              <span style={{fontWeight: 'bold',fontSize: '24px', lineHeight:'28px'}}>Performance Track</span>
                           </div>
                         </div>
                       </div>
-                      <div className="row" style={{height: '50px'}}></div>
+                      <div className="row" style={{height: '40px'}}></div>
                       <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                           <PerformanceChartContainer/>
